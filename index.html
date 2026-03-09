@@ -1,0 +1,1333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daneshjou Lab Manual</title>
+<style>
+/* ===== RESET & BASE ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  color: #1a1a2e; background: #fff; line-height: 1.7;
+}
+
+/* ===== LAYOUT ===== */
+.page-wrapper { display: flex; min-height: 100vh; }
+
+/* ===== SIDEBAR ===== */
+.sidebar {
+  width: 300px; min-width: 300px; background: #f8f9fa; border-right: 1px solid #e5e7eb;
+  position: fixed; top: 0; left: 0; bottom: 0; overflow-y: auto; z-index: 100;
+  display: flex; flex-direction: column; transition: transform 0.3s ease;
+}
+.sidebar-header {
+  padding: 1.5rem 1.25rem 1rem; border-bottom: 1px solid #e5e7eb;
+}
+.sidebar-title {
+  font-size: 1.2rem; font-weight: 700; color: #8c1515; margin-bottom: 0.75rem; letter-spacing: -0.01em;
+}
+.sidebar-search {
+  width: 100%; padding: 0.45rem 0.7rem; border: 1px solid #d1d5db; border-radius: 6px;
+  font-size: 0.85rem; background: #fff; outline: none; transition: border-color 0.2s;
+}
+.sidebar-search:focus { border-color: #8c1515; box-shadow: 0 0 0 2px rgba(140,21,21,0.1); }
+.sidebar-search::placeholder { color: #9ca3af; }
+
+.sidebar-nav { flex: 1; padding: 0.5rem 0; overflow-y: auto; }
+.sidebar-nav a {
+  display: block; padding: 0.4rem 1.25rem; font-size: 0.87rem; color: #374151;
+  text-decoration: none; border-left: 3px solid transparent; transition: all 0.15s;
+}
+.sidebar-nav a:hover { background: #e9ecef; color: #111827; }
+.sidebar-nav a.active { border-left-color: #b91c1c; color: #b91c1c; font-weight: 600; background: rgba(185,28,28,0.04); }
+.sidebar-nav a.chapter-link { font-weight: 600; padding-top: 0.7rem; margin-top: 0.2rem; }
+.sidebar-nav a.sub-link { padding-left: 2rem; font-size: 0.82rem; color: #6b7280; }
+.sidebar-nav a.sub-link:hover { color: #374151; }
+.sidebar-nav a.sub-link.active { color: #b91c1c; }
+.sidebar-nav a.hidden { display: none; }
+
+/* ===== MAIN CONTENT ===== */
+.main-content {
+  margin-left: 300px; flex: 1; display: flex; justify-content: center; min-width: 0;
+}
+.content-area {
+  max-width: 850px; width: 100%; padding: 2.5rem 2.5rem 5rem;
+}
+
+/* ===== RIGHT TOC ===== */
+.right-toc {
+  width: 220px; min-width: 220px; position: sticky; top: 2rem; align-self: flex-start;
+  padding: 1.5rem 1rem 1.5rem 0; max-height: calc(100vh - 4rem); overflow-y: auto;
+  display: none;
+}
+@media (min-width: 1200px) {
+  .right-toc { display: block; }
+  .main-content { padding-right: 0; }
+}
+.right-toc-title { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #9ca3af; margin-bottom: 0.7rem; }
+.right-toc a {
+  display: block; font-size: 0.8rem; color: #6b7280; text-decoration: none;
+  padding: 0.2rem 0; border-left: 2px solid #e5e7eb; padding-left: 0.7rem; transition: all 0.15s;
+}
+.right-toc a:hover { color: #374151; }
+.right-toc a.active { color: #b91c1c; border-left-color: #b91c1c; font-weight: 500; }
+
+/* ===== HAMBURGER ===== */
+.hamburger {
+  display: none; position: fixed; top: 0.75rem; left: 0.75rem; z-index: 200;
+  width: 40px; height: 40px; background: #fff; border: 1px solid #d1d5db;
+  border-radius: 8px; cursor: pointer; align-items: center; justify-content: center;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+.hamburger span { display: block; width: 20px; height: 2px; background: #374151; margin: 4px auto; transition: all 0.3s; }
+.overlay {
+  display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.3); z-index: 90;
+}
+
+/* ===== TYPOGRAPHY ===== */
+.content-area h1 { font-size: 2rem; font-weight: 800; color: #111827; margin-bottom: 0.5rem; letter-spacing: -0.02em; border-bottom: 2px solid #e5e7eb; padding-bottom: 0.6rem; }
+.content-area h2 { font-size: 1.5rem; font-weight: 700; color: #1f2937; margin-top: 2.5rem; margin-bottom: 0.6rem; letter-spacing: -0.01em; }
+.content-area h3 { font-size: 1.15rem; font-weight: 600; color: #374151; margin-top: 1.8rem; margin-bottom: 0.4rem; }
+.content-area p { margin-bottom: 1rem; color: #374151; }
+.content-area ul, .content-area ol { margin-bottom: 1rem; padding-left: 1.5rem; color: #374151; }
+.content-area li { margin-bottom: 0.35rem; }
+.content-area li ul, .content-area li ol { margin-top: 0.35rem; margin-bottom: 0.35rem; }
+.content-area code { background: #f3f4f6; padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.88em; font-family: "SF Mono", "Fira Code", "Fira Mono", Menlo, monospace; }
+.content-area pre { background: #1e293b; color: #e2e8f0; padding: 1rem 1.2rem; border-radius: 8px; overflow-x: auto; margin-bottom: 1rem; font-size: 0.85rem; line-height: 1.6; }
+.content-area pre code { background: none; padding: 0; color: inherit; }
+.content-area a { color: #b91c1c; text-decoration: underline; text-decoration-color: rgba(185,28,28,0.3); }
+.content-area a:hover { text-decoration-color: #b91c1c; }
+.content-area strong { font-weight: 600; }
+.content-area blockquote { border-left: 3px solid #d1d5db; padding-left: 1rem; margin: 1rem 0; color: #6b7280; font-style: italic; }
+
+section.chapter { padding-top: 1rem; padding-bottom: 2rem; border-bottom: 1px solid #f0f0f0; }
+section.chapter:last-child { border-bottom: none; }
+.subtitle { color: #6b7280; font-size: 1rem; margin-bottom: 1.5rem; }
+.authors { color: #9ca3af; font-size: 0.9rem; margin-bottom: 2rem; }
+
+/* ===== CALLOUTS ===== */
+.callout { border-left: 4px solid; border-radius: 6px; padding: 1rem 1.2rem; margin: 1.2rem 0; }
+.callout-title { font-weight: 700; margin-bottom: 0.4rem; font-size: 0.95rem; }
+.callout-principle { background: #f0fdf4; border-color: #16a34a; }
+.callout-principle .callout-title { color: #15803d; }
+.callout-example { background: #eff6ff; border-color: #3b82f6; }
+.callout-example .callout-title { color: #2563eb; }
+.callout-warning { background: #fef2f2; border-color: #dc2626; }
+.callout-warning .callout-title { color: #dc2626; }
+
+/* ===== MISSING INFO BANNER ===== */
+.missing-info-banner {
+  background: #fef3c7; border: 1px solid #f59e0b; border-left: 4px solid #f59e0b;
+  border-radius: 6px; padding: 0.8rem 1rem; margin-bottom: 1.5rem;
+  font-size: 0.9rem; color: #92400e;
+}
+.missing-info-banner a { color: #92400e; font-weight: 600; }
+
+/* ===== CONFIG BLOCK ===== */
+.config-block { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1rem 1.2rem; margin: 1rem 0; }
+.config-block h4 { font-size: 0.9rem; margin-bottom: 0.5rem; color: #475569; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 900px) {
+  .sidebar { transform: translateX(-100%); }
+  .sidebar.open { transform: translateX(0); }
+  .hamburger { display: flex; }
+  .overlay.show { display: block; }
+  .main-content { margin-left: 0; }
+  .content-area { padding: 3.5rem 1.25rem 4rem; }
+  .right-toc { display: none !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- Hamburger -->
+<button class="hamburger" id="hamburger" aria-label="Toggle navigation">
+  <span></span><span></span><span></span>
+</button>
+<div class="overlay" id="overlay"></div>
+
+<div class="page-wrapper">
+<!-- ===== SIDEBAR ===== -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-title">Daneshjou Lab Manual</div>
+    <input type="text" class="sidebar-search" id="search" placeholder="Search sections..." autocomplete="off">
+  </div>
+  <div class="sidebar-nav" id="sidebar-nav">
+    <a href="#home" class="chapter-link active" data-section="home">Home</a>
+    <a href="#ch1" class="chapter-link" data-section="ch1">1. Lab Culture</a>
+    <a href="#s1-1" class="sub-link" data-section="s1-1">1.1 Mutual Respect</a>
+    <a href="#s1-2" class="sub-link" data-section="s1-2">1.2 Respect for Data Subjects</a>
+    <a href="#s1-3" class="sub-link" data-section="s1-3">1.3 Working Hours</a>
+    <a href="#s1-4" class="sub-link" data-section="s1-4">1.4 Support &amp; Accommodations</a>
+    <a href="#ch2" class="chapter-link" data-section="ch2">2. General Policies</a>
+    <a href="#s2-1" class="sub-link" data-section="s2-1">2.1 Joining the Lab</a>
+    <a href="#s2-2" class="sub-link" data-section="s2-2">2.2 Onboarding</a>
+    <a href="#s2-3" class="sub-link" data-section="s2-3">2.3 Documentation</a>
+    <a href="#s2-4" class="sub-link" data-section="s2-4">2.4 Recurring Meetings</a>
+    <a href="#s2-5" class="sub-link" data-section="s2-5">2.5 Meeting Agendas</a>
+    <a href="#s2-6" class="sub-link" data-section="s2-6">2.6 Individual Development Plans</a>
+    <a href="#s2-7" class="sub-link" data-section="s2-7">2.7 Academic Progress</a>
+    <a href="#s2-8" class="sub-link" data-section="s2-8">2.8 Research Units</a>
+    <a href="#s2-9" class="sub-link" data-section="s2-9">2.9 Deadlines</a>
+    <a href="#s2-10" class="sub-link" data-section="s2-10">2.10 Lab Meetings</a>
+    <a href="#s2-11" class="sub-link" data-section="s2-11">2.11 Professional Development</a>
+    <a href="#s2-12" class="sub-link" data-section="s2-12">2.12 Recommendation Letters</a>
+    <a href="#s2-13" class="sub-link" data-section="s2-13">2.13 Communication</a>
+    <a href="#ch3" class="chapter-link" data-section="ch3">3. Funding</a>
+    <a href="#s3-1" class="sub-link" data-section="s3-1">3.1 Graduate Students</a>
+    <a href="#s3-2" class="sub-link" data-section="s3-2">3.2 Postdocs</a>
+    <a href="#s3-3" class="sub-link" data-section="s3-3">3.3 Active Lab Funding</a>
+    <a href="#ch4" class="chapter-link" data-section="ch4">4. Data</a>
+    <a href="#s4-1" class="sub-link" data-section="s4-1">4.1 Human Subjects Training</a>
+    <a href="#s4-2" class="sub-link" data-section="s4-2">4.2 Encryption &amp; Security</a>
+    <a href="#s4-3" class="sub-link" data-section="s4-3">4.3 IRBs</a>
+    <a href="#s4-4" class="sub-link" data-section="s4-4">4.4 Data at Stanford</a>
+    <a href="#s4-5" class="sub-link" data-section="s4-5">4.5 Bringing Data to Stanford</a>
+    <a href="#s4-6" class="sub-link" data-section="s4-6">4.6 Data Sharing</a>
+    <a href="#s4-7" class="sub-link" data-section="s4-7">4.7 Simulated Data</a>
+    <a href="#ch5" class="chapter-link" data-section="ch5">5. Computing Resources</a>
+    <a href="#s5-1" class="sub-link" data-section="s5-1">5.1 Sherlock Cluster</a>
+    <a href="#s5-2" class="sub-link" data-section="s5-2">5.2 Who to Ask for Help</a>
+    <a href="#s5-3" class="sub-link" data-section="s5-3">5.3 GPUs vs APIs</a>
+    <a href="#s5-4" class="sub-link" data-section="s5-4">5.4 Software</a>
+    <a href="#ch6" class="chapter-link" data-section="ch6">6. Conferences</a>
+    <a href="#s6-1" class="sub-link" data-section="s6-1">6.1 Travel Policies</a>
+    <a href="#s6-2" class="sub-link" data-section="s6-2">6.2 Slides</a>
+    <a href="#s6-3" class="sub-link" data-section="s6-3">6.3 Posters</a>
+    <a href="#s6-4" class="sub-link" data-section="s6-4">6.4 Conferences by Field</a>
+    <a href="#ch7" class="chapter-link" data-section="ch7">7. Publications</a>
+    <a href="#s7-1" class="sub-link" data-section="s7-1">7.1 Authorship</a>
+    <a href="#s7-2" class="sub-link" data-section="s7-2">7.2 Acknowledgments</a>
+    <a href="#s7-3" class="sub-link" data-section="s7-3">7.3 Preprints</a>
+    <a href="#s7-4" class="sub-link" data-section="s7-4">7.4 Least Publishable Units</a>
+    <a href="#s7-5" class="sub-link" data-section="s7-5">7.5 Types of Papers</a>
+    <a href="#s7-6" class="sub-link" data-section="s7-6">7.6 Data Visualization</a>
+    <a href="#s7-7" class="sub-link" data-section="s7-7">7.7 Journals</a>
+    <a href="#ch8" class="chapter-link" data-section="ch8">8. Code Review</a>
+    <a href="#s8-1" class="sub-link" data-section="s8-1">8.1 Why Code Review?</a>
+    <a href="#s8-2" class="sub-link" data-section="s8-2">8.2 Guidelines</a>
+    <a href="#s8-3" class="sub-link" data-section="s8-3">8.3 Workflow Overview</a>
+    <a href="#s8-4" class="sub-link" data-section="s8-4">8.4 When to Stop</a>
+    <a href="#s8-5" class="sub-link" data-section="s8-5">8.5 Pre-Review Checklist</a>
+    <a href="#s8-6" class="sub-link" data-section="s8-6">8.6 Requesting a Review</a>
+    <a href="#s8-7" class="sub-link" data-section="s8-7">8.7 Giving a Review</a>
+    <a href="#s8-8" class="sub-link" data-section="s8-8">8.8 Timeline &amp; Speed</a>
+    <a href="#ch9" class="chapter-link" data-section="ch9">9. Code Workflow</a>
+    <a href="#s9-1" class="sub-link" data-section="s9-1">9.1 Team Agreements</a>
+    <a href="#s9-2" class="sub-link" data-section="s9-2">9.2 Code Style</a>
+    <a href="#s9-3" class="sub-link" data-section="s9-3">9.3 Naming Things</a>
+    <a href="#s9-4" class="sub-link" data-section="s9-4">9.4 Project Organization</a>
+    <a href="#s9-5" class="sub-link" data-section="s9-5">9.5 Quarto Documents</a>
+    <a href="#s9-6" class="sub-link" data-section="s9-6">9.6 Git &amp; GitHub</a>
+    <a href="#s9-7" class="sub-link" data-section="s9-7">9.7 Documentation</a>
+    <a href="#s9-8" class="sub-link" data-section="s9-8">9.8 Running Code</a>
+    <a href="#s9-9" class="sub-link" data-section="s9-9">9.9 Lock Package Versions</a>
+    <a href="#s9-10" class="sub-link" data-section="s9-10">9.10 Opt-in Practices</a>
+    <a href="#ch10" class="chapter-link" data-section="ch10">10. Pre-Flight Checklist</a>
+    <a href="#s10-1" class="sub-link" data-section="s10-1">10.1 Crosscheck</a>
+    <a href="#s10-2" class="sub-link" data-section="s10-2">10.2 The Checklist</a>
+    <a href="#ch11" class="chapter-link" data-section="ch11">11. LLM Experiment Pipeline</a>
+    <a href="#s11-1" class="sub-link" data-section="s11-1">11.1 Overview</a>
+    <a href="#s11-2" class="sub-link" data-section="s11-2">11.2 Test Locally First</a>
+    <a href="#s11-3" class="sub-link" data-section="s11-3">11.3 Modular Datasets</a>
+    <a href="#s11-4" class="sub-link" data-section="s11-4">11.4 Config vs. Code</a>
+    <a href="#s11-5" class="sub-link" data-section="s11-5">11.5 Resumable Experiments</a>
+    <a href="#s11-6" class="sub-link" data-section="s11-6">11.6 Pin Model Versions</a>
+    <a href="#s11-7" class="sub-link" data-section="s11-7">11.7 Track Costs</a>
+    <a href="#s11-8" class="sub-link" data-section="s11-8">11.8 Free Models First</a>
+    <a href="#s11-9" class="sub-link" data-section="s11-9">11.9 Scale Up in Stages</a>
+    <a href="#s11-10" class="sub-link" data-section="s11-10">11.10 Open-Source Validation</a>
+    <a href="#s11-11" class="sub-link" data-section="s11-11">11.11 Parallelize API Keys</a>
+    <a href="#s11-12" class="sub-link" data-section="s11-12">11.12 Order of Operations</a>
+  </div>
+</nav>
+
+<!-- ===== MAIN ===== -->
+<main class="main-content">
+<article class="content-area" id="content">
+
+<!-- ==================== HOME ==================== -->
+<section class="chapter" id="home">
+  <h1>Daneshjou Lab Manual</h1>
+  <p class="subtitle">Stanford University &middot; Department of Biomedical Data Science &amp; Dermatology</p>
+  <p>The Daneshjou Lab at Stanford is a group of interdisciplinary researchers in the Department of Biomedical Data Science and Dermatology, developing and applying AI/ML methods to solve problems in medicine and health equity. The faculty PI is Professor Roxana Daneshjou, MD, PhD.</p>
+  <p>This manual covers lab culture, policies, and practical guides for running research projects &mdash; including large-scale LLM experiments.</p>
+  <p class="authors">Contributors include Ank A. Agarwal, Aaron H. Fanous, MD, and Roxana Daneshjou, MD, PhD.</p>
+</section>
+
+<!-- ==================== CHAPTER 1 ==================== -->
+<section class="chapter" id="ch1">
+  <h1>1. Lab Culture</h1>
+  <div class="missing-info-banner">
+    <strong>&#9888; Needs Daneshjou Lab Info</strong> &mdash; This section is adapted from the
+    <a href="https://stanfordhpds.github.io/lab_manual/">HPDS Lab Manual</a>.
+    Replace with Daneshjou Lab-specific content.
+  </div>
+
+  <h2 id="s1-1">1.1 Mutual Respect in the Lab</h2>
+  <p>We strive to maintain a culture of mutual respect within the Daneshjou Lab. This means:</p>
+  <ul>
+    <li><strong>Active listening.</strong> When someone is speaking, give them your full attention. Avoid interrupting or formulating your response while they are still talking.</li>
+    <li><strong>Don't dominate conversations.</strong> Make space for others to contribute, especially those who are quieter or more junior. Actively invite others' perspectives.</li>
+    <li><strong>Be prepared.</strong> Come to meetings having completed the work you committed to, having read the materials, and ready to contribute constructively.</li>
+    <li><strong>Start and end meetings on time.</strong> Respect everyone's schedule by beginning promptly and wrapping up when scheduled. If a discussion needs to continue, schedule a follow-up rather than running over.</li>
+  </ul>
+  <p>Science is a team effort, and the quality of our collaboration directly impacts the quality of our research.</p>
+
+  <h2 id="s1-2">1.2 Respect for People Represented in Study Data</h2>
+  <p>We hold deep respect for the communities and individuals whose data we study. Every data point represents a real person with a real story. This demands:</p>
+  <ul>
+    <li>Rigorous attention to <strong>data privacy</strong> at all stages of research.</li>
+    <li>Thoughtfulness about how our findings may impact the communities we study.</li>
+    <li>Careful, respectful language when describing populations and health outcomes.</li>
+    <li>Awareness that data carries historical biases that we have a responsibility to understand and address.</li>
+  </ul>
+
+  <h2 id="s1-3">1.3 Working Hours</h2>
+  <p>We believe in working efficiently on your own schedule. There is no culture of overwork in the Daneshjou Lab. Key principles:</p>
+  <ul>
+    <li><strong>Work efficiently.</strong> Focus on productivity during your working hours rather than logging long hours.</li>
+    <li><strong>Don't expect evening or weekend work.</strong> If you send messages or emails outside of normal hours, do not expect a response until the next business day.</li>
+    <li><strong>Embrace time off.</strong> Take your vacations. Step away from work. Rest is essential for creativity and sustained productivity.</li>
+    <li>If you find yourself consistently working excessive hours, raise it with Dr. Daneshjou. This may indicate a workload issue that needs to be addressed.</li>
+  </ul>
+
+  <h2 id="s1-4">1.4 Trainee Support, Access, and Accommodations</h2>
+  <p>Your wellbeing matters. Stanford provides a range of support resources:</p>
+  <ul>
+    <li><strong>Mental health resources:</strong> Stanford offers counseling services through <a href="https://vaden.stanford.edu/caps">Counseling and Psychological Services (CAPS)</a>. Please use them if you need support.</li>
+    <li><strong>Office of Accessible Education (OAE):</strong> If you have a disability or need accommodations, the <a href="https://oae.stanford.edu">OAE</a> can help.</li>
+    <li><strong>Accommodation letters:</strong> If you have an accommodation letter, please share it with Dr. Daneshjou so we can ensure your needs are met. This information is kept confidential.</li>
+  </ul>
+  <p>If there is anything the lab can do to support your success, please don't hesitate to ask.</p>
+</section>
+
+<!-- ==================== CHAPTER 2 ==================== -->
+<section class="chapter" id="ch2">
+  <h1>2. General Policies</h1>
+  <div class="missing-info-banner">
+    <strong>&#9888; Needs Daneshjou Lab Info</strong> &mdash; This section is adapted from the
+    <a href="https://stanfordhpds.github.io/lab_manual/">HPDS Lab Manual</a>.
+    Replace with Daneshjou Lab-specific content.
+  </div>
+
+  <h2 id="s2-1">2.1 Joining the Lab</h2>
+  <p>Prospective lab members should reach out to Dr. Daneshjou directly. We welcome students and postdocs from a range of backgrounds, including biomedical informatics, computer science, statistics, medicine, and related fields. When considering new members, we look for intellectual curiosity, a collaborative mindset, and a commitment to rigorous research.</p>
+
+  <h2 id="s2-2">2.2 Onboarding</h2>
+  <p>When you join the lab:</p>
+  <ul>
+    <li>You will be added to the lab's <strong>GitHub organization</strong>. Make sure you have a GitHub account ready.</li>
+    <li>Review all <strong>internal documentation</strong>, including this manual, relevant IRB protocols, and existing project documentation.</li>
+    <li>Set up your computing environment (see <a href="#ch5">Chapter 5: Computing Resources</a>).</li>
+    <li>Introduce yourself on Slack and attend the next lab meeting.</li>
+  </ul>
+
+  <h2 id="s2-3">2.3 Documentation</h2>
+  <p>Good documentation is the backbone of reproducible research. In the Daneshjou Lab:</p>
+  <ul>
+    <li>All significant decisions, methods, and findings should be <strong>written down</strong>.</li>
+    <li>Meeting agendas and notes should be documented (see below).</li>
+    <li>All code and analysis should be version-controlled with <strong>Git and GitHub</strong>.</li>
+    <li>Project documentation should be maintained alongside code in the repository.</li>
+  </ul>
+
+  <h2 id="s2-4">2.4 Recurring Meetings</h2>
+  <p>Each trainee meets with Dr. Daneshjou on a <strong>weekly or biweekly</strong> basis for individual check-ins. These meetings are your time to discuss progress, roadblocks, and next steps. Additional meetings can always be scheduled as needed.</p>
+
+  <h2 id="s2-5">2.5 Meeting Agendas</h2>
+  <p>For every meeting, <strong>prepare an agenda in advance</strong>. Share it with attendees before the meeting. A good agenda includes:</p>
+  <ul>
+    <li>Updates since the last meeting</li>
+    <li>Questions or decisions needed</li>
+    <li>Proposed next steps</li>
+  </ul>
+  <p>After the meeting, note down action items and who is responsible for each.</p>
+
+  <h2 id="s2-6">2.6 Individual Development Plans</h2>
+  <p>All trainees should create and maintain an Individual Development Plan (IDP) in consultation with Dr. Daneshjou. Your IDP should outline:</p>
+  <ul>
+    <li>Your short- and long-term career goals</li>
+    <li>Skills you want to develop</li>
+    <li>Timeline and milestones</li>
+    <li>Resources and support you need</li>
+  </ul>
+  <p>Review your IDP with Dr. Daneshjou at least once per year.</p>
+
+  <h2 id="s2-7">2.7 Academic Progress</h2>
+  <p>Graduate students should stay on track with their department's milestones (qualifying exams, thesis proposals, committee meetings, etc.). Dr. Daneshjou will help you plan your research to align with your academic requirements, but you are responsible for knowing your deadlines and requirements.</p>
+
+  <h2 id="s2-8">2.8 Research Units</h2>
+  <p>Research in the lab is organized into <strong>research units</strong> &mdash; focused projects or themes. Each unit has a lead researcher and may involve multiple collaborators. Units allow us to maintain focus while pursuing multiple lines of inquiry.</p>
+
+  <h2 id="s2-9">2.9 Deadlines</h2>
+  <p>We set <strong>ambitious yet feasible</strong> deadlines. Key principles:</p>
+  <ul>
+    <li>When you commit to a deadline, do your best to meet it.</li>
+    <li>If you realize you can't meet a deadline, <strong>communicate proactively</strong>. Tell Dr. Daneshjou as soon as possible so we can adjust plans.</li>
+    <li>It's far better to flag a problem early than to miss a deadline silently.</li>
+    <li>For conference and journal deadlines, plan backwards from the submission date, building in time for code review, feedback, and revision.</li>
+  </ul>
+
+  <h2 id="s2-10">2.10 Lab Meetings</h2>
+  <p>Lab meetings are held regularly (typically weekly). They serve as a venue for:</p>
+  <ul>
+    <li>Presenting ongoing work and getting feedback</li>
+    <li>Practicing conference talks or job talks</li>
+    <li>Journal clubs and paper discussions</li>
+    <li>Onboarding new members and sharing knowledge</li>
+  </ul>
+  <p>All lab members are expected to attend. Presenters should prepare polished slides and be ready for constructive discussion.</p>
+
+  <h2 id="s2-11">2.11 Professional Development</h2>
+  <p>The Daneshjou Lab supports your professional growth. This includes:</p>
+  <ul>
+    <li>Attending and presenting at conferences</li>
+    <li>Taking relevant courses and workshops</li>
+    <li>Developing teaching and mentoring skills</li>
+    <li>Building your professional network</li>
+    <li>Writing grants and fellowship applications</li>
+  </ul>
+  <p>Discuss your professional development goals with Dr. Daneshjou during your IDP reviews.</p>
+
+  <h2 id="s2-12">2.12 Recommendation Letters</h2>
+  <p>Dr. Daneshjou is happy to write recommendation letters for lab members. Please provide at least <strong>4 weeks notice</strong> and include:</p>
+  <ul>
+    <li>The opportunity you're applying for and its deadline</li>
+    <li>Your CV and personal statement (if applicable)</li>
+    <li>Specific points you'd like highlighted</li>
+    <li>Submission instructions</li>
+  </ul>
+
+  <h2 id="s2-13">2.13 Communication</h2>
+  <p><strong>Slack</strong> is our primary communication tool. Use it for:</p>
+  <ul>
+    <li>Quick questions and updates</li>
+    <li>Sharing papers and resources</li>
+    <li>Coordinating meetings</li>
+  </ul>
+  <p>For longer discussions or sensitive topics, schedule a meeting or use email. Keep Slack channels organized and on-topic.</p>
+</section>
+
+<!-- ==================== CHAPTER 3 ==================== -->
+<section class="chapter" id="ch3">
+  <h1>3. Funding</h1>
+  <div class="missing-info-banner">
+    <strong>&#9888; Needs Daneshjou Lab Info</strong> &mdash; This section is adapted from the
+    <a href="https://stanfordhpds.github.io/lab_manual/">HPDS Lab Manual</a>.
+    Replace with Daneshjou Lab-specific content.
+  </div>
+
+  <h2 id="s3-1">3.1 For Graduate Students</h2>
+  <p>Stanford offers numerous fellowship opportunities for graduate students. Consider applying to:</p>
+  <ul>
+    <li><strong>Knight-Hennessy Scholars:</strong> Full funding for graduate study at Stanford across all departments.</li>
+    <li><strong>DARE (Diversifying Academia, Recruiting Excellence):</strong> Doctoral fellowships supporting underrepresented scholars.</li>
+    <li><strong>Stanford Graduate Fellowship (SGF):</strong> Three-year fellowship for incoming PhD students in engineering and sciences.</li>
+    <li><strong>Stanford Interdisciplinary Graduate Fellowship (SIGF):</strong> For students whose research bridges departments.</li>
+    <li><strong>Data Science Scholars:</strong> For students pursuing data science research.</li>
+    <li><strong>Bio-X:</strong> Interdisciplinary biosciences research fellowships.</li>
+    <li><strong>RAISE (Responsibility, AI, Society, and Ethics):</strong> For students working at the intersection of AI and society.</li>
+  </ul>
+  <p>Talk to Dr. Daneshjou early about fellowship applications &mdash; many have fall deadlines.</p>
+
+  <h2 id="s3-2">3.2 For Postdocs</h2>
+  <p>Postdoctoral fellows should explore:</p>
+  <ul>
+    <li><strong>Propel Postdoctoral Scholars Program:</strong> Stanford's program for early-career researchers.</li>
+    <li><strong>Stanford Science Fellows:</strong> Highly competitive independent postdoctoral fellowships.</li>
+    <li>NIH F32, K99/R00, and other federal training grants.</li>
+    <li>Foundation-specific grants relevant to your research area.</li>
+  </ul>
+
+  <h2 id="s3-3">3.3 Active Lab Funding</h2>
+  <p>[Update with Daneshjou Lab grants]</p>
+</section>
+
+<!-- ==================== CHAPTER 4 ==================== -->
+<section class="chapter" id="ch4">
+  <h1>4. Data</h1>
+  <div class="missing-info-banner">
+    <strong>&#9888; Needs Daneshjou Lab Info</strong> &mdash; This section is adapted from the
+    <a href="https://stanfordhpds.github.io/lab_manual/">HPDS Lab Manual</a>.
+    Replace with Daneshjou Lab-specific content.
+  </div>
+
+  <p>We hold deep respect for the individuals and communities represented in our data. Every dataset contains information about real people, and we treat it accordingly.</p>
+  <p>The cardinal rule of data handling in this lab:</p>
+  <blockquote><strong>If you are not sure whether you can take an action with a data set, stop and ask. Always.</strong></blockquote>
+  <p>Additional non-negotiable rules:</p>
+  <ul>
+    <li><strong>Never download data to personal computers.</strong> Research data stays on approved, encrypted, institutional systems.</li>
+    <li><strong>Never export results with fewer than 11 observations per cell.</strong> Small cell sizes can enable re-identification of individuals.</li>
+  </ul>
+
+  <h2 id="s4-1">4.1 Human Subjects Training (CITI)</h2>
+  <p>All lab members working with human subjects data must complete <strong>CITI training</strong> before accessing any data. This is a Stanford and federal requirement. Complete the appropriate modules for your research area through <a href="https://about.citiprogram.org/">CITI Program</a>.</p>
+  <p>Keep your certification current &mdash; it typically requires renewal every few years.</p>
+
+  <h2 id="s4-2">4.2 Computer Encryption and Security</h2>
+  <p>All computers used for research must have:</p>
+  <ul>
+    <li><strong>Full-disk encryption</strong> enabled (FileVault on Mac, BitLocker on Windows)</li>
+    <li>A <strong>strong password</strong> and automatic screen lock</li>
+    <li>Up-to-date <strong>operating system and security patches</strong></li>
+    <li><strong>Stanford's endpoint management</strong> software installed if required</li>
+  </ul>
+
+  <h2 id="s4-3">4.3 IRBs</h2>
+  <p>Most research involving human data requires <strong>Institutional Review Board (IRB)</strong> approval. At Stanford, IRB protocols are managed through <a href="https://irb.stanford.edu/">Stanford's IRB office</a>. Key points:</p>
+  <ul>
+    <li>Determine whether your research requires IRB review before beginning any data work.</li>
+    <li>Many secondary data analyses may qualify for exemption, but you still need to apply.</li>
+    <li>IRB amendments are needed when you change your research scope, data sources, or methods.</li>
+    <li>Dr. Daneshjou can help you navigate the IRB process.</li>
+  </ul>
+
+  <h2 id="s4-4">4.4 Data at Stanford</h2>
+  <p>Stanford has several institutional data resources:</p>
+  <ul>
+    <li><strong>STARR (STAnford Research Repository):</strong> Stanford Medicine's clinical data warehouse for research. Apply for access through the <a href="https://med.stanford.edu/starr-tools.html">STARR website</a>.</li>
+    <li><strong>PHS Data Core:</strong> The Population Health Sciences data core can help with data acquisition, linkage, and management.</li>
+  </ul>
+  <p>These are Stanford-wide resources available to all approved researchers.</p>
+
+  <h2 id="s4-5">4.5 Bringing Data to Stanford</h2>
+  <p>If you need to bring external data to Stanford (from collaborators, public sources, etc.), you must go through the <strong>Data Risk Assessment (DRA)</strong> process. This ensures data is classified correctly and handled on appropriate infrastructure. Work with Stanford's <a href="https://privacy.stanford.edu/data-governance">Data Governance office</a> to complete this process.</p>
+
+  <h2 id="s4-6">4.6 Data Sharing</h2>
+  <p>We are committed to open science where possible. When sharing data:</p>
+  <ul>
+    <li>Ensure sharing is permitted under your IRB protocol and any data use agreements.</li>
+    <li>De-identify data thoroughly before sharing.</li>
+    <li>Use established repositories (e.g., PhysioNet, Dryad, Zenodo) for public data releases.</li>
+    <li>Include clear documentation and data dictionaries.</li>
+  </ul>
+
+  <h2 id="s4-7">4.7 Simulated Data</h2>
+  <p>For development and testing, use <strong>simulated data</strong> that mimics the structure of your real data without containing any real information. This allows you to:</p>
+  <ul>
+    <li>Develop and debug code without accessing protected data</li>
+    <li>Share code examples publicly</li>
+    <li>Test pipelines before running them on real data</li>
+  </ul>
+  <p>Include simulated data generators in your project repositories.</p>
+</section>
+
+<!-- ==================== CHAPTER 5 ==================== -->
+<section class="chapter" id="ch5">
+  <h1>5. Computing Resources</h1>
+  <div class="missing-info-banner">
+    <strong>&#9888; Needs Daneshjou Lab Info</strong> &mdash; This section is partially filled with Daneshjou Lab content.
+    Sections marked as HPDS-adapted should be replaced with Daneshjou Lab-specific content.
+    Adapted from the <a href="https://stanfordhpds.github.io/lab_manual/">HPDS Lab Manual</a>.
+  </div>
+
+  <h2 id="s5-1">5.1 Sherlock Cluster</h2>
+  <p><a href="https://www.sherlock.stanford.edu/">Sherlock</a> is Stanford's shared HPC (high-performance computing) cluster. It provides access to CPUs, GPUs, and large-memory nodes for computationally intensive research.</p>
+  <p>Key information for Daneshjou Lab members:</p>
+  <ul>
+    <li>The lab has access to <strong>GPU nodes</strong> on Sherlock for deep learning and LLM work.</li>
+    <li>Request access through Dr. Daneshjou and the Sherlock team.</li>
+    <li>For help getting started on Sherlock, contact <strong>Aaron Fanous</strong> (see Section 5.2).</li>
+    <li>Use SLURM for job scheduling. See the <a href="https://www.sherlock.stanford.edu/docs/">Sherlock documentation</a> for guides.</li>
+    <li>Store data on Sherlock's scratch or lab storage &mdash; never on login nodes.</li>
+  </ul>
+
+  <h2 id="s5-2">5.2 Who to Ask for Help</h2>
+  <p>When you need computing resources or run into issues, here's who to contact:</p>
+  <ul>
+    <li><strong>API access and credits:</strong> Email <code>daneshjoulab@</code> for API key requests. Contact <strong>Vicky</strong> for information about available API credits and budget.</li>
+    <li><strong>Sherlock cluster help:</strong> Contact <strong>Aaron Fanous</strong> for guidance on setting up jobs, GPU allocation, and troubleshooting Sherlock issues.</li>
+    <li><strong>General computing questions:</strong> Post in the lab's Slack computing channel. Chances are someone has encountered your issue before.</li>
+  </ul>
+
+  <h2 id="s5-3">5.3 Choosing Your Compute: GPUs vs APIs</h2>
+  <p>A key strategic decision in any LLM project is whether to use <strong>open-source models on Sherlock GPUs</strong> or <strong>commercial APIs</strong> (OpenAI, Anthropic, Google, etc.).</p>
+
+  <div class="callout callout-principle">
+    <div class="callout-title">Guiding Principle</div>
+    <p>Think about what makes your results most compelling. If you can show your findings hold across both commercial and open-source models, that's a much stronger paper than results from a single model family.</p>
+  </div>
+
+  <p>Consider a <strong>dual-testing strategy</strong>:</p>
+  <ul>
+    <li><strong>Commercial APIs</strong> (GPT-4o, Claude, Gemini): Easy to use, excellent performance, but costs money and results are tied to a proprietary system.</li>
+    <li><strong>Open-source models</strong> (Llama, Mistral, etc. on Sherlock): Free to run once you have GPU access, fully reproducible, and demonstrates generalizability.</li>
+  </ul>
+  <p>The strategic question is: <em>what makes your results most compelling?</em> In many cases, showing that your findings replicate across model families is the strongest possible evidence.</p>
+
+  <div class="callout callout-example">
+    <div class="callout-title">Example</div>
+    <p>For a study with 12 configurations &times; 200 questions &times; 3 runs = <strong>7,200 API calls</strong>, running on GPT-4o might cost $300&ndash;$500. But if you also validate on Llama-3-70B via Sherlock (free), you've doubled your evidence for zero additional cost.</p>
+  </div>
+
+  <h2 id="s5-4">5.4 Software</h2>
+  <div class="missing-info-banner">
+    <strong>&#9888; Needs Daneshjou Lab Info</strong> &mdash; This subsection is adapted from the
+    <a href="https://stanfordhpds.github.io/lab_manual/">HPDS Lab Manual</a>.
+  </div>
+  <p>Common software used in the lab:</p>
+  <ul>
+    <li><strong>Python:</strong> Our primary language for ML/AI research. Use virtual environments (venv, conda, or uv) for every project.</li>
+    <li><strong>R and RStudio:</strong> Used for statistical analysis and data visualization.</li>
+    <li><strong>OmniGraffle / Adobe Illustrator:</strong> For publication-quality figures and diagrams.</li>
+    <li><strong>Git:</strong> Version control for all code. See <a href="#ch9">Chapter 9</a> for our Git workflow.</li>
+    <li><strong>VS Code / JupyterLab:</strong> Common development environments.</li>
+  </ul>
+</section>
+
+<!-- ==================== CHAPTER 6 ==================== -->
+<section class="chapter" id="ch6">
+  <h1>6. Conferences</h1>
+  <div class="missing-info-banner">
+    <strong>&#9888; Needs Daneshjou Lab Info</strong> &mdash; This section is adapted from the
+    <a href="https://stanfordhpds.github.io/lab_manual/">HPDS Lab Manual</a>.
+    Replace with Daneshjou Lab-specific content.
+  </div>
+
+  <h2 id="s6-1">6.1 Stanford Travel Policies</h2>
+  <p>All conference travel must comply with <a href="https://travel.stanford.edu/">Stanford's travel policies</a>. Key points:</p>
+  <ul>
+    <li>Get approval from Dr. Daneshjou before registering for or booking any conference travel.</li>
+    <li>Book travel through Stanford's approved channels when possible.</li>
+    <li>Keep all receipts and submit expense reports promptly after returning.</li>
+    <li>International travel requires additional approvals &mdash; start the process early.</li>
+  </ul>
+
+  <h2 id="s6-2">6.2 Slides</h2>
+  <p>When presenting at conferences:</p>
+  <ul>
+    <li>Use a clean, professional slide template. The lab can provide templates.</li>
+    <li>Practice your talk with lab members before the conference.</li>
+    <li>Include Stanford and Daneshjou Lab affiliations on your title slide.</li>
+    <li>Acknowledge funding sources and collaborators.</li>
+  </ul>
+
+  <h2 id="s6-3">6.3 Posters</h2>
+  <ul>
+    <li>Design posters to be readable from 4&ndash;6 feet away.</li>
+    <li>Use large fonts (24pt+ for body text).</li>
+    <li>Lead with your key finding &mdash; don't make people read the whole poster to get the point.</li>
+    <li>Print through Stanford's poster printing services.</li>
+  </ul>
+
+  <h2 id="s6-4">6.4 Conferences by Field</h2>
+  <p>Relevant conferences for Daneshjou Lab research areas include (but are not limited to):</p>
+  <ul>
+    <li><strong>Clinical AI/ML:</strong> MLHC (Machine Learning for Healthcare), CHIL, AMIA</li>
+    <li><strong>Dermatology:</strong> AAD, SID, ESDR, WCD</li>
+    <li><strong>Machine Learning:</strong> NeurIPS, ICML, ICLR, AAAI</li>
+    <li><strong>Medical Informatics:</strong> AMIA Annual Symposium, AMIA Informatics Summit</li>
+    <li><strong>Health Equity:</strong> AcademyHealth, SGIM</li>
+    <li><strong>NLP/LLMs:</strong> ACL, EMNLP, NAACL</li>
+  </ul>
+</section>
+
+<!-- ==================== CHAPTER 7 ==================== -->
+<section class="chapter" id="ch7">
+  <h1>7. Publications</h1>
+  <div class="missing-info-banner">
+    <strong>&#9888; Needs Daneshjou Lab Info</strong> &mdash; This section is adapted from the
+    <a href="https://stanfordhpds.github.io/lab_manual/">HPDS Lab Manual</a>.
+    Replace with Daneshjou Lab-specific content.
+  </div>
+
+  <h2 id="s7-1">7.1 Authorship</h2>
+  <p>We follow <a href="https://www.icmje.org/recommendations/browse/roles-and-responsibilities/defining-the-role-of-authors-and-contributors.html">ICMJE guidelines</a> for authorship. To be an author, you must meet <strong>all four</strong> criteria:</p>
+  <ol>
+    <li>Substantial contributions to conception/design or data acquisition/analysis/interpretation</li>
+    <li>Drafting or critically revising the manuscript</li>
+    <li>Final approval of the version to be published</li>
+    <li>Agreement to be accountable for all aspects of the work</li>
+  </ol>
+  <p>Key lab policies on authorship:</p>
+  <ul>
+    <li><strong>Discuss authorship early.</strong> Have an explicit conversation about expected contributions and authorship order at the start of a project.</li>
+    <li><strong>No new authors without PI agreement.</strong> Adding authors mid-project requires discussion with Dr. Daneshjou.</li>
+    <li>Authorship disputes should be raised early and resolved through open discussion.</li>
+  </ul>
+
+  <h2 id="s7-2">7.2 Acknowledgments</h2>
+  <p>Always acknowledge:</p>
+  <ul>
+    <li>Funding sources (grant numbers)</li>
+    <li>Computing resources used (e.g., Sherlock)</li>
+    <li>Individuals who contributed but don't meet authorship criteria</li>
+    <li>Data providers and sources</li>
+  </ul>
+
+  <h2 id="s7-3">7.3 Preprints</h2>
+  <p>We strongly support preprinting. Post preprints to <strong>arXiv</strong>, <strong>medRxiv</strong>, or <strong>bioRxiv</strong> (as appropriate) before or concurrent with journal submission. Preprints:</p>
+  <ul>
+    <li>Establish priority for your findings</li>
+    <li>Enable faster dissemination</li>
+    <li>Allow community feedback before peer review</li>
+  </ul>
+  <p>Discuss timing with Dr. Daneshjou before posting.</p>
+
+  <h2 id="s7-4">7.4 Least Publishable Units</h2>
+  <p><strong>Avoid &ldquo;salami slicing&rdquo;</strong> &mdash; the practice of splitting a coherent body of work into the smallest possible publishable pieces. This:</p>
+  <ul>
+    <li>Dilutes the impact of your work</li>
+    <li>Fragments the narrative</li>
+    <li>Wastes reviewers' and readers' time</li>
+  </ul>
+  <p>Instead, aim for substantial papers that tell a complete story. When in doubt, discuss the scope with Dr. Daneshjou.</p>
+
+  <h2 id="s7-5">7.5 Types of Papers</h2>
+  <p>Common paper types you may write:</p>
+  <ul>
+    <li><strong>Original research:</strong> Novel findings from your experiments or analyses</li>
+    <li><strong>Review articles:</strong> Comprehensive synthesis of a research area</li>
+    <li><strong>Methods papers:</strong> New tools, pipelines, or methodological advances</li>
+    <li><strong>Perspective/commentary:</strong> Shorter opinion pieces on emerging topics</li>
+    <li><strong>Letters/brief communications:</strong> Short, focused contributions</li>
+    <li><strong>Benchmark/dataset papers:</strong> Introducing new datasets or evaluation frameworks</li>
+  </ul>
+
+  <h2 id="s7-6">7.6 Publication-Ready Data Visualization</h2>
+  <p>Figures are often the most important part of a paper. Ensure your visualizations:</p>
+  <ul>
+    <li>Are <strong>clear and self-explanatory</strong> with complete labels and legends</li>
+    <li>Use colorblind-friendly palettes</li>
+    <li>Meet the journal's resolution and format requirements</li>
+    <li>Use vector formats (PDF, SVG) when possible for crisp rendering</li>
+    <li>Have consistent styling across all figures in a paper</li>
+  </ul>
+
+  <h2 id="s7-7">7.7 Journals</h2>
+  <p>Target journals based on the nature and scope of your work. Relevant venues include:</p>
+  <ul>
+    <li><strong>General/high-impact:</strong> Nature, Science, NEJM, The Lancet, JAMA, BMJ</li>
+    <li><strong>Nature family:</strong> Nature Medicine, Nature Biomedical Engineering, Nature Machine Intelligence, Nature Digital Medicine (npj)</li>
+    <li><strong>AI/ML:</strong> JMLR, TMLR, journals associated with NeurIPS/ICML</li>
+    <li><strong>Medical informatics:</strong> JAMIA, JBI, JMIR</li>
+    <li><strong>Dermatology:</strong> JAMA Dermatology, JID, BJD, JAAD</li>
+    <li><strong>Health equity:</strong> Health Affairs, AJPH</li>
+  </ul>
+  <p>Always discuss target journal selection with Dr. Daneshjou before writing.</p>
+</section>
+
+<!-- ==================== CHAPTER 8 ==================== -->
+<section class="chapter" id="ch8">
+  <h1>8. Code Review</h1>
+  <div class="missing-info-banner">
+    <strong>&#9888; Needs Daneshjou Lab Info</strong> &mdash; This section is adapted from the
+    <a href="https://stanfordhpds.github.io/lab_manual/">HPDS Lab Manual</a>.
+    Replace with Daneshjou Lab-specific content.
+  </div>
+
+  <h2 id="s8-1">8.1 Why Code Review?</h2>
+  <p>Code review is a cornerstone of our research practice. It:</p>
+  <ul>
+    <li><strong>Makes better science:</strong> A second pair of eyes catches errors in logic, analysis, and implementation.</li>
+    <li><strong>Catches bugs:</strong> Even experienced programmers make mistakes. Code review finds them before they affect results.</li>
+    <li><strong>Validates reproducibility:</strong> If someone else can understand and run your code, it's more likely to be reproducible.</li>
+    <li><strong>Makes better teams:</strong> Code review spreads knowledge across the lab, reduces bus factor, and raises everyone's coding skills.</li>
+  </ul>
+
+  <h2 id="s8-2">8.2 Code Review Guidelines</h2>
+  <p>All substantive code changes should go through review. This includes:</p>
+  <ul>
+    <li>Data processing and cleaning scripts</li>
+    <li>Analysis and modeling code</li>
+    <li>Visualization code for publications</li>
+    <li>Pipeline and infrastructure code</li>
+  </ul>
+  <p>Quick exploratory scripts and one-off analyses may skip formal review, but anything that produces a result in a paper must be reviewed.</p>
+
+  <h2 id="s8-3">8.3 Overview of Code Review Workflow</h2>
+  <ol>
+    <li><strong>Branch:</strong> Create a feature branch from main for your work.</li>
+    <li><strong>Develop:</strong> Write and test your code on the branch.</li>
+    <li><strong>Pull Request (PR):</strong> Open a PR on GitHub when ready for review.</li>
+    <li><strong>Review:</strong> A reviewer examines the code, leaves comments, and requests changes if needed.</li>
+    <li><strong>Iterate:</strong> Address feedback, push updates, and respond to comments.</li>
+    <li><strong>Merge:</strong> Once approved, merge the PR into main.</li>
+  </ol>
+
+  <h2 id="s8-4">8.4 When to Stop for Code Review</h2>
+  <p>Not every commit needs review, but certain <strong>gates</strong> should always trigger a review:</p>
+  <ul>
+    <li><strong>Data pull / cleaning:</strong> Before running analyses on cleaned data</li>
+    <li><strong>Descriptive tables:</strong> Before finalizing Table 1 or summary statistics</li>
+    <li><strong>Algorithms / models:</strong> Before training final models or running main analyses</li>
+    <li><strong>Reporting:</strong> Before generating results that will appear in a manuscript</li>
+  </ul>
+
+  <h2 id="s8-5">8.5 Pre-Review Checklist</h2>
+  <p>Before requesting a review, make sure you've:</p>
+  <ul>
+    <li>Used <strong>pull requests</strong> (not direct commits to main)</li>
+    <li>Re-run the code <strong>from a blank environment</strong> to ensure it works end-to-end</li>
+    <li>Followed the lab's <strong>style guide</strong> (see <a href="#s9-2">Section 9.2</a>)</li>
+    <li>Included clear comments and documentation</li>
+    <li>Removed debugging code and temporary files</li>
+    <li>Added or updated tests if applicable</li>
+  </ul>
+
+  <h2 id="s8-6">8.6 Requesting a Code Review</h2>
+  <p>When you open a PR:</p>
+  <ul>
+    <li><strong>Identify the right reviewer(s):</strong> Choose someone familiar with the codebase or methodology.</li>
+    <li><strong>Write a good PR description:</strong> Explain what the code does, why you wrote it this way, and what to focus on during review.</li>
+    <li>Link to relevant issues, papers, or documentation.</li>
+    <li>Highlight areas where you're uncertain and would appreciate extra scrutiny.</li>
+  </ul>
+
+  <h2 id="s8-7">8.7 Giving a Code Review</h2>
+  <p>When reviewing someone else's code:</p>
+  <ul>
+    <li><strong>Check correctness:</strong> Does the code do what it's supposed to? Are the algorithms implemented correctly?</li>
+    <li><strong>Check readability:</strong> Can you understand the code? Are variable names clear? Is the logic easy to follow?</li>
+    <li><strong>Check reproducibility:</strong> Can you run the code? Are dependencies specified?</li>
+    <li><strong>Be kind:</strong> Frame feedback constructively. Use "we" language. Remember that you're reviewing the code, not the person.</li>
+    <li><strong>Highlight good things:</strong> Don't just point out problems &mdash; also acknowledge clever solutions, clean code, and good documentation.</li>
+  </ul>
+
+  <h2 id="s8-8">8.8 Timeline and Speed</h2>
+  <p>Target a <strong>single business day</strong> turnaround for code reviews. If you can't review within a day, let the author know when you'll be able to. Prompt reviews keep projects moving and show respect for your colleagues' time.</p>
+</section>
+
+<!-- ==================== CHAPTER 9 ==================== -->
+<section class="chapter" id="ch9">
+  <h1>9. Code Workflow</h1>
+  <div class="missing-info-banner">
+    <strong>&#9888; Needs Daneshjou Lab Info</strong> &mdash; This section is adapted from the
+    <a href="https://stanfordhpds.github.io/lab_manual/">HPDS Lab Manual</a>.
+    Replace with Daneshjou Lab-specific content.
+  </div>
+
+  <h2 id="s9-1">9.1 Team Agreements</h2>
+  <p>At the start of each project, team members should agree on:</p>
+  <ul>
+    <li>Programming language(s) and versions</li>
+    <li>Code style and formatting conventions</li>
+    <li>Git branching strategy</li>
+    <li>Code review expectations</li>
+    <li>Documentation standards</li>
+  </ul>
+  <p>Write these agreements down in the project's README or a CONTRIBUTING file.</p>
+
+  <h2 id="s9-2">9.2 Code Style</h2>
+  <p>Consistent code style makes code easier to read and review. Use automated formatters:</p>
+  <ul>
+    <li><strong>R:</strong> Follow the <a href="https://style.tidyverse.org/">tidyverse style guide</a>. Use the <code>styler</code> package for automatic formatting.</li>
+    <li><strong>Python:</strong> Use <a href="https://github.com/psf/black">Black</a> for formatting and <a href="https://github.com/astral-sh/ruff">Ruff</a> for linting. These are non-negotiable.</li>
+    <li><strong>SQL:</strong> Use <a href="https://sqlfluff.com/">SQLFluff</a> for SQL formatting and linting.</li>
+  </ul>
+  <p>Configure these tools in your project and run them before every commit (ideally via pre-commit hooks).</p>
+
+  <h2 id="s9-3">9.3 Naming Things</h2>
+  <p>Good names make code self-documenting:</p>
+  <ul>
+    <li>Use <code>snake_case</code> for variables, functions, and file names.</li>
+    <li>Be <strong>descriptive</strong>: <code>patient_age</code> not <code>x</code>, <code>calculate_accuracy</code> not <code>func1</code>.</li>
+    <li>Avoid abbreviations unless they're universally understood (<code>df</code> for DataFrame is fine; <code>pt_dx_cnt</code> is not).</li>
+    <li>Name files to indicate their content and order: <code>01_clean_data.py</code>, <code>02_train_model.py</code>, <code>03_evaluate.py</code>.</li>
+  </ul>
+
+  <h2 id="s9-4">9.4 Project Organization</h2>
+  <p>Organize your project with descriptive folder names:</p>
+  <pre><code>project/
+├── data/            # Data files (gitignored if sensitive)
+├── src/             # Source code
+├── notebooks/       # Exploratory notebooks
+├── configs/         # Configuration files
+├── results/         # Output results
+├── figures/         # Generated figures
+├── tests/           # Test files
+├── .gitignore       # Always include!
+└── README.md        # Project overview and setup instructions</code></pre>
+  <p>Key rules:</p>
+  <ul>
+    <li><strong>.gitignore sensitive data.</strong> Never commit data files, credentials, or API keys to Git.</li>
+    <li><strong>No absolute paths in code.</strong> Use relative paths or environment variables.</li>
+    <li>Be clear about which environments are <strong>protected</strong> (production, shared clusters) vs. development.</li>
+  </ul>
+
+  <h2 id="s9-5">9.5 Reproducible Documents with Quarto</h2>
+  <p><a href="https://quarto.org/">Quarto</a> enables you to create reproducible documents that combine code, results, and narrative. Use Quarto for:</p>
+  <ul>
+    <li>Analysis reports that need to be re-run as data or methods change</li>
+    <li>Documentation and tutorials</li>
+    <li>Supplementary materials for publications</li>
+  </ul>
+
+  <h2 id="s9-6">9.6 Use Git and GitHub</h2>
+  <p>Every project must use Git and live on GitHub (in the lab's organization). Our workflow:</p>
+  <ol>
+    <li><strong>Main branch</strong> is always in a working state.</li>
+    <li><strong>Feature branches</strong> for new work: <code>feature/add-model-evaluation</code></li>
+    <li><strong>Pull requests</strong> for all merges to main (see <a href="#ch8">Chapter 8</a>).</li>
+    <li><strong>Meaningful commit messages:</strong> Explain <em>why</em>, not just <em>what</em>.</li>
+  </ol>
+  <p>Additional practices:</p>
+  <ul>
+    <li><strong>Transferring repos:</strong> If you started a project in your personal GitHub, transfer it to the lab organization.</li>
+    <li><strong>Releases:</strong> Tag releases for paper submissions and camera-ready versions using <code>git tag</code> and GitHub Releases.</li>
+  </ul>
+
+  <h2 id="s9-7">9.7 Documentation</h2>
+  <ul>
+    <li><strong>Comments:</strong> Explain <em>why</em> the code does something, not <em>what</em> it does (the code itself shows what).</li>
+    <li><strong>README:</strong> Every repository needs a README with setup instructions, usage, and description.</li>
+    <li><strong>Docstrings:</strong> Write docstrings for functions and classes, especially public APIs.</li>
+  </ul>
+
+  <h2 id="s9-8">9.8 Running Code</h2>
+  <ul>
+    <li><strong>Blank slate:</strong> Always test that your code runs from a fresh environment (new terminal, clean install of dependencies).</li>
+    <li><strong>Pipelines:</strong> For multi-step analyses, use pipeline tools like <code>Make</code>, <code>Snakemake</code>, or Python's <code>targets</code> equivalent. These ensure steps run in the right order and only re-run when inputs change.</li>
+  </ul>
+
+  <h2 id="s9-9">9.9 Lock Package Versions</h2>
+  <p>Reproducibility requires pinned dependencies:</p>
+  <ul>
+    <li><strong>R:</strong> Use <a href="https://rstudio.github.io/renv/"><code>renv</code></a> to create project-specific R library snapshots.</li>
+    <li><strong>Python:</strong> Use <a href="https://github.com/astral-sh/uv"><code>uv</code></a> (preferred) or <code>pip freeze</code> to lock exact package versions. Store these in <code>requirements.txt</code> or <code>pyproject.toml</code>.</li>
+  </ul>
+  <p>Always include lock files in your repository.</p>
+
+  <h2 id="s9-10">9.10 Opt-in Practices</h2>
+  <p>These practices are encouraged but not required for every project:</p>
+  <ul>
+    <li><strong>Testing:</strong> Write unit tests for critical functions, especially data processing and scoring logic. Use <code>pytest</code> for Python, <code>testthat</code> for R.</li>
+    <li><strong>Docker:</strong> Containerize projects for maximum reproducibility, especially if they'll be shared or deployed. Include a <code>Dockerfile</code> in the repository.</li>
+    <li><strong>CI/CD:</strong> Set up GitHub Actions for automated testing and linting.</li>
+  </ul>
+</section>
+
+<!-- ==================== CHAPTER 10 ==================== -->
+<section class="chapter" id="ch10">
+  <h1>10. Pre-Flight Checklist</h1>
+  <div class="missing-info-banner">
+    <strong>&#9888; Needs Daneshjou Lab Info</strong> &mdash; This section is adapted from the
+    <a href="https://stanfordhpds.github.io/lab_manual/">HPDS Lab Manual</a>.
+    Replace with Daneshjou Lab-specific content.
+  </div>
+
+  <h2 id="s10-1">10.1 Crosscheck</h2>
+  <p>Before submitting any paper, perform a <strong>crosscheck</strong>: have someone other than the primary analyst independently verify key results. This means:</p>
+  <ul>
+    <li>Running the code from scratch and confirming the numbers match</li>
+    <li>Checking that figures and tables in the manuscript match the code output</li>
+    <li>Verifying that statistical tests are appropriate and correctly implemented</li>
+  </ul>
+
+  <h2 id="s10-2">10.2 The Checklist</h2>
+  <p>Before submitting a paper or making results public, walk through this checklist:</p>
+
+  <h3>Repository &amp; Files</h3>
+  <ul>
+    <li>Code is in the lab's GitHub organization</li>
+    <li>Repository is organized with clear folder structure</li>
+    <li>README includes setup instructions and description</li>
+    <li>No sensitive data or credentials committed</li>
+    <li>.gitignore is properly configured</li>
+  </ul>
+
+  <h3>Code &amp; Reproducibility</h3>
+  <ul>
+    <li>Code runs from a blank environment</li>
+    <li>Package versions are locked (renv / uv)</li>
+    <li>All results can be reproduced from the code</li>
+    <li>Code has been reviewed by at least one other person</li>
+    <li>Code style is consistent (formatted with Black/styler)</li>
+  </ul>
+
+  <h3>Submission</h3>
+  <ul>
+    <li>All authors have reviewed and approved the manuscript</li>
+    <li>Figures and tables match code output (crosschecked)</li>
+    <li>Acknowledgments include all funding sources</li>
+    <li>Author contributions statement is accurate</li>
+    <li>Preprint posted (if applicable)</li>
+  </ul>
+
+  <h3>Acceptance</h3>
+  <ul>
+    <li>Tag a release in GitHub for the accepted version</li>
+    <li>Archive code and data as appropriate (e.g., Zenodo DOI)</li>
+    <li>Ensure data sharing commitments are met</li>
+  </ul>
+
+  <h3>Opt-in Workflows</h3>
+  <ul>
+    <li>Tests pass</li>
+    <li>Docker image builds and runs</li>
+    <li>CI/CD pipeline is green</li>
+  </ul>
+</section>
+
+<!-- ==================== CHAPTER 11 ==================== -->
+<section class="chapter" id="ch11">
+  <h1>11. LLM Experiment Pipeline</h1>
+
+  <h2 id="s11-1">11.1 Overview</h2>
+  <p>This guide covers everything you need to run large-scale LLM experiments &mdash; from getting API keys and cluster access, to building a robust experiment pipeline, to executing runs without wasting money or time.</p>
+  <p>Throughout this chapter, we'll use a <strong>running example</strong>: an experiment with 12 configurations &times; 200 questions &times; 3 runs = <strong>7,200 API calls</strong>, costing approximately $300&ndash;$500 on GPT-4o. The principles here will help you execute experiments like this efficiently, cheaply, and reproducibly.</p>
+
+  <h2 id="s11-2">11.2 Test Locally First</h2>
+  <div class="callout callout-principle">
+    <div class="callout-title">Principle</div>
+    <p>Develop and debug on your laptop. Only move to a cluster when you need scale.</p>
+  </div>
+  <p>Your laptop is your fastest feedback loop. The edit-run-debug cycle is seconds on your machine vs. minutes on a cluster (waiting for jobs, checking logs, re-submitting). Use your laptop for all development work.</p>
+  <p>What "locally" means in practice:</p>
+  <ul>
+    <li>Run your pipeline on <strong>5 cases, not 200</strong>. The goal is to verify the pipeline works end-to-end, not to generate real results.</li>
+    <li>Test every component: data loading, prompt construction, API calls, response parsing, result storage, and scoring.</li>
+    <li>Only move to the cluster when your code runs successfully on a small sample and you need the scale of full data or GPU resources.</li>
+  </ul>
+  <div class="callout callout-example">
+    <div class="callout-title">Example</div>
+    <p>Before running 7,200 calls on Sherlock, test with 2 configurations &times; 3 questions &times; 1 run = <strong>6 calls</strong> on your laptop. This takes seconds and catches 90% of bugs.</p>
+  </div>
+  <div class="callout callout-warning">
+    <div class="callout-title">Warning</div>
+    <p>Do not upload untested code to the cluster. Debugging on a cluster is slow, expensive, and frustrating. Every minute you spend testing locally saves 10 minutes on the cluster.</p>
+  </div>
+
+  <h2 id="s11-3">11.3 Modular Datasets</h2>
+  <div class="callout callout-principle">
+    <div class="callout-title">Principle</div>
+    <p>Design code so adding a dataset requires only a new loader and scorer.</p>
+  </div>
+  <p>Don't hard-code your pipeline for one specific dataset. Your experiment runner should not "know" about the internals of any particular dataset. Instead, use a <strong>modular architecture</strong>:</p>
+  <ul>
+    <li>The <strong>runner</strong> orchestrates execution but doesn't know dataset details.</li>
+    <li>Each <strong>dataset module</strong> provides two things: a <strong>loader</strong> (returns questions in a standard format) and a <strong>scorer</strong> (evaluates responses).</li>
+    <li>The <strong>config file</strong> specifies which datasets to use.</li>
+  </ul>
+  <div class="callout callout-example">
+    <div class="callout-title">Example</div>
+    <p>You start with USMLE-style questions, then want to add a pharma dataset. With modular design, you write <code>pharma_loader.py</code> and <code>pharma_scorer.py</code>, add <code>pharma</code> to your config, and run. No changes to the runner. Without modular design, you're rewriting <code>if dataset == "usmle"</code> blocks everywhere.</p>
+  </div>
+  <div class="callout callout-warning">
+    <div class="callout-title">Warning</div>
+    <p>If you find <code>if dataset == "usmle"</code> in 15 places in your code, stop and refactor. This pattern makes your code fragile, hard to extend, and bug-prone.</p>
+  </div>
+
+  <h2 id="s11-4">11.4 Config vs. Code</h2>
+  <div class="callout callout-principle">
+    <div class="callout-title">Principle</div>
+    <p>Put all experiment parameters in config files, not hard-coded in your scripts.</p>
+  </div>
+  <p>Every parameter that might change between runs belongs in a config file: model names, temperature, number of runs, dataset paths, output directories, API endpoints, budget caps. Your code should read these from config, never hard-code them.</p>
+  <p>Maintain separate configs for different environments:</p>
+
+  <div class="config-block">
+    <h4>laptop.yaml</h4>
+    <pre><code>models: ["gpt-4o-mini"]
+datasets: ["usmle_sample"]
+n_cases: 5
+n_runs: 1
+output_dir: "./results/debug"
+budget_cap: 1.00</code></pre>
+  </div>
+
+  <div class="config-block">
+    <h4>sherlock.yaml</h4>
+    <pre><code>models: ["gpt-4o-2024-08-06", "llama-3-70b"]
+datasets: ["usmle", "pharma", "derm"]
+n_cases: 200
+n_runs: 3
+output_dir: "/scratch/users/$USER/results"
+budget_cap: 500.00</code></pre>
+  </div>
+
+  <div class="callout callout-example">
+    <div class="callout-title">Example</div>
+    <p>Run with <code>python run_experiment.py --config laptop.yaml</code> for testing, then switch to <code>--config sherlock.yaml</code> for production. Same code, different parameters. No editing source files.</p>
+  </div>
+
+  <h2 id="s11-5">11.5 Resumable Experiments</h2>
+  <div class="callout callout-principle">
+    <div class="callout-title">Principle</div>
+    <p>Store results in SQLite so crashes don't lose progress.</p>
+  </div>
+  <p>Large experiments will crash. APIs will timeout. Cluster jobs will be killed. Your pipeline <strong>must</strong> be able to resume from where it left off. The pattern:</p>
+  <ol>
+    <li><strong>Manifest:</strong> At startup, generate the full list of (config, question, run) tuples that need to be executed.</li>
+    <li><strong>Update on completion:</strong> After each successful API call, immediately write the result to the database.</li>
+    <li><strong>Query pending on restart:</strong> When the script restarts, query the database for completed runs and only execute the remaining ones.</li>
+  </ol>
+  <p><strong>Why SQLite?</strong> It's a single file (no database server to manage), supports concurrent reads, handles atomic writes, and is built into Python. It's the perfect tool for experiment tracking.</p>
+  <div class="callout callout-example">
+    <div class="callout-title">Example</div>
+    <p>Your experiment crashes at 3,000/7,200 completed calls. You restart the script. It queries the SQLite database, finds 3,000 completed rows, generates the remaining 4,200 tasks, and picks up right where it left off. Zero wasted work, zero wasted money.</p>
+  </div>
+  <div class="callout callout-warning">
+    <div class="callout-title">Warning</div>
+    <p>Do not accumulate results in memory and save to a JSON file at the end. If your script crashes at call 6,999 of 7,200, you lose all 6,999 results. Save incrementally, always.</p>
+  </div>
+
+  <h2 id="s11-6">11.6 Pin Model Versions</h2>
+  <div class="callout callout-principle">
+    <div class="callout-title">Principle</div>
+    <p>Use exact model version strings (e.g., <code>gpt-4o-2024-08-06</code>), not generic names (e.g., <code>gpt-4o</code>).</p>
+  </div>
+  <p>Generic model names like <code>gpt-4o</code> are aliases that point to different underlying models over time. If you run an experiment in March and re-run it in July, you may get different results because the alias now points to a newer model version.</p>
+  <p>Always:</p>
+  <ul>
+    <li>Use the <strong>exact version string</strong> in your config files.</li>
+    <li>Store the <code>model_id</code> in your results database alongside every response.</li>
+    <li>Record the model version in your paper's methods section.</li>
+  </ul>
+  <div class="callout callout-example">
+    <div class="callout-title">Example</div>
+    <p>A reviewer asks you to re-run your analysis. Your March experiment used <code>gpt-4o</code>, which pointed to <code>gpt-4o-2024-01-25</code>. By July, it points to <code>gpt-4o-2024-05-13</code> &mdash; a different model with different behavior. Because you logged <code>gpt-4o-2024-01-25</code> in your database, you can explain the discrepancy and re-run with the exact same model.</p>
+  </div>
+
+  <h2 id="s11-7">11.7 Track Costs in Real Time</h2>
+  <div class="callout callout-principle">
+    <div class="callout-title">Principle</div>
+    <p>Log token count and cost per call, and set a hard budget cap.</p>
+  </div>
+  <p>API costs can surprise you. Track them in real time:</p>
+  <ul>
+    <li><strong>What to track:</strong> Input tokens, output tokens, and cost per API call. Most APIs return token counts in the response. Multiply by the per-token price to get cost.</li>
+    <li><strong>Hard cap:</strong> Set a budget cap in your config. When cumulative spending hits 90% of the cap, log a warning. At 100%, stop execution. Do not blow through your budget.</li>
+    <li>Store cost data in your SQLite database alongside results.</li>
+  </ul>
+  <div class="callout callout-example">
+    <div class="callout-title">Example</div>
+    <p>Your budget is $400 for GPT-4o. After 5,000 of 7,200 calls, your dashboard shows $280 spent. You're on track. At $360 (90%), you get a warning. At $400, the script stops gracefully. No surprises on the lab credit card.</p>
+  </div>
+
+  <h2 id="s11-8">11.8 Free Models First</h2>
+  <div class="callout callout-principle">
+    <div class="callout-title">Principle</div>
+    <p>Validate your entire pipeline on free-tier LLMs before spending any money.</p>
+  </div>
+  <p>Use a <strong>testing ladder</strong> to catch bugs cheaply:</p>
+  <ol>
+    <li><strong>Dry-run:</strong> Mock the API calls entirely. Test data flow, storage, and scoring logic without hitting any API.</li>
+    <li><strong>Free-tier models:</strong> Use free APIs (e.g., Groq's free tier for Llama models) to test the full pipeline with real API calls at zero cost.</li>
+    <li><strong>Small paid run:</strong> Run a small sample (20&ndash;50 cases) on your target model to validate results and estimate costs.</li>
+    <li><strong>Full paid run:</strong> Only now do you commit to the full experiment.</li>
+  </ol>
+  <div class="callout callout-example">
+    <div class="callout-title">Example</div>
+    <p>You test your pipeline on Groq's free Llama endpoint. It runs 7,200 calls for free and reveals a parsing bug in your scoring function &mdash; the regex doesn't handle multi-line responses. You fix it before spending $400 on GPT-4o. That free test just saved you $400 and days of re-running.</p>
+  </div>
+  <div class="callout callout-warning">
+    <div class="callout-title">Warning</div>
+    <p>Skipping the free-model testing stage is the most common way people waste money. "I'll just run a few on GPT-4o to test" turns into $50 of debugging. Use the testing ladder.</p>
+  </div>
+
+  <h2 id="s11-9">11.9 Scale Up in Stages</h2>
+  <div class="callout callout-principle">
+    <div class="callout-title">Principle</div>
+    <p>Three stages: bug-finding, signal-checking, full run.</p>
+  </div>
+  <p>Even after free-model testing, scale up your paid runs gradually:</p>
+  <ul>
+    <li><strong>Stage 1 &mdash; Bug-finding (5&ndash;10 cases):</strong> Run a tiny sample on your target model. Verify that API calls work, responses parse correctly, and results store properly. This should cost &lt;$5.</li>
+    <li><strong>Stage 2 &mdash; Signal-checking (20&ndash;50 cases):</strong> Run a larger sample. Check if the signal you expect is there. Are accuracy numbers in the right ballpark? Do different configurations produce meaningfully different results? If not, reconsider your experimental design before spending more.</li>
+    <li><strong>Stage 3 &mdash; Full run:</strong> Only after Stages 1 and 2 confirm everything works and the signal is there, commit to the full experiment.</li>
+  </ul>
+  <div class="callout callout-example">
+    <div class="callout-title">Example</div>
+    <p><strong>Stage 1:</strong> 2 configs &times; 5 questions &times; 1 run = 10 calls on GPT-4o. Cost: $0.50. Everything works.<br>
+    <strong>Stage 2:</strong> 4 configs &times; 30 questions &times; 2 runs = 240 calls. Cost: $15. You see a 12% accuracy difference between your best and worst configs &mdash; signal is there.<br>
+    <strong>Stage 3:</strong> 12 configs &times; 200 questions &times; 3 runs = 7,200 calls. Cost: $350. Full results for the paper.</p>
+  </div>
+  <div class="callout callout-warning">
+    <div class="callout-title">Warning</div>
+    <p>Do not jump straight to the full run. If Stage 2 shows no meaningful signal, you just saved yourself $335 and can redesign your experiment instead.</p>
+  </div>
+
+  <h2 id="s11-10">11.10 Open-Source Validation</h2>
+  <div class="callout callout-principle">
+    <div class="callout-title">Principle</div>
+    <p>Run your experiments on at least one open-source model to demonstrate generalizability.</p>
+  </div>
+  <p>Running on both commercial and open-source models provides a <strong>dual benefit</strong>:</p>
+  <ul>
+    <li><strong>Engineering validation:</strong> If your pipeline works on both OpenAI's API and a local Llama model, it's genuinely robust. Different APIs have different response formats, error modes, and behaviors.</li>
+    <li><strong>Publishable data:</strong> "Our findings hold across both GPT-4o and Llama-3-70B" is a much stronger claim than "Our findings hold on GPT-4o." Reviewers love this.</li>
+  </ul>
+  <div class="callout callout-example">
+    <div class="callout-title">Example</div>
+    <p>Your main results use GPT-4o (commercial). For validation, you run the same experiment on Llama-3-70B via Sherlock (free). Your paper now shows results across model families, strengthening every claim you make. The Llama run cost $0 and added an entire results table.</p>
+  </div>
+
+  <h2 id="s11-11">11.11 Parallelize API Keys</h2>
+  <div class="callout callout-principle">
+    <div class="callout-title">Principle</div>
+    <p>Use multiple free API keys sharing one database to maximize throughput.</p>
+  </div>
+  <p>When using free-tier APIs with rate limits, you can parallelize across multiple accounts:</p>
+  <ul>
+    <li>Each API key gets its own <strong>worker process</strong>.</li>
+    <li>All workers share a single <strong>SQLite database</strong> as a work queue.</li>
+    <li>Workers <strong>atomically claim</strong> tasks from the queue (SQLite handles the locking).</li>
+    <li>Results are written to the same database, regardless of which worker completed them.</li>
+  </ul>
+  <p>This architecture scales linearly: 5 keys = 5&times; throughput.</p>
+  <div class="callout callout-example">
+    <div class="callout-title">Example</div>
+    <p>You create 5 free Groq accounts, each with its own API key. Each key gets a worker process. Your 7,200-call experiment that would take 10 hours with one key now finishes in 2 hours. All results land in the same SQLite database, ready for analysis.</p>
+  </div>
+
+  <h2 id="s11-12">11.12 Order of Operations</h2>
+  <p>Here is the recommended sequence for running an LLM experiment from start to finish:</p>
+  <ol>
+    <li><strong>Build the pipeline locally</strong> &mdash; data loading, prompt construction, API call, response parsing, result storage, scoring. Test on 5 cases.</li>
+    <li><strong>Add config management</strong> &mdash; move all parameters to YAML config files. Create laptop.yaml and sherlock.yaml.</li>
+    <li><strong>Implement resumability</strong> &mdash; SQLite database with manifest, incremental writes, and restart logic.</li>
+    <li><strong>Add cost tracking</strong> &mdash; log tokens and costs per call, implement budget caps.</li>
+    <li><strong>Test on free models</strong> &mdash; run the full experiment on Groq or other free-tier APIs. Fix any issues.</li>
+    <li><strong>Stage 1 paid test</strong> &mdash; 5&ndash;10 cases on your target model. Verify everything works.</li>
+    <li><strong>Stage 2 signal check</strong> &mdash; 20&ndash;50 cases. Confirm the experimental signal is there.</li>
+    <li><strong>Stage 3 full run</strong> &mdash; commit to the full experiment. Monitor costs in real time.</li>
+  </ol>
+  <p><strong>Key insight:</strong> You should spend $0 until step 6. Steps 1&ndash;5 are entirely free (development time and free-tier APIs). Only in steps 6&ndash;8 do you spend money, and by then you've eliminated almost all risk of wasted spend.</p>
+</section>
+
+</article>
+
+<!-- ===== RIGHT TOC ===== -->
+<aside class="right-toc" id="right-toc">
+  <div class="right-toc-title">On this page</div>
+  <div id="right-toc-links"></div>
+</aside>
+</main>
+</div>
+
+<script>
+(function() {
+  // Elements
+  const sidebar = document.getElementById('sidebar');
+  const hamburger = document.getElementById('hamburger');
+  const overlay = document.getElementById('overlay');
+  const sidebarNav = document.getElementById('sidebar-nav');
+  const searchInput = document.getElementById('search');
+  const content = document.getElementById('content');
+  const rightTocLinks = document.getElementById('right-toc-links');
+  const navLinks = sidebarNav.querySelectorAll('a');
+
+  // Mobile toggle
+  hamburger.addEventListener('click', () => {
+    sidebar.classList.toggle('open');
+    overlay.classList.toggle('show');
+  });
+  overlay.addEventListener('click', () => {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('show');
+  });
+
+  // Smooth scroll on sidebar click
+  navLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const id = link.getAttribute('href').slice(1);
+      const target = document.getElementById(id);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // close mobile sidebar
+        sidebar.classList.remove('open');
+        overlay.classList.remove('show');
+      }
+    });
+  });
+
+  // Search
+  searchInput.addEventListener('input', () => {
+    const q = searchInput.value.toLowerCase().trim();
+    if (!q) {
+      navLinks.forEach(l => l.classList.remove('hidden'));
+      return;
+    }
+    // For each chapter link, check if it or any of its sub-links match
+    const chapters = sidebarNav.querySelectorAll('a.chapter-link');
+    chapters.forEach(ch => {
+      const chId = ch.getAttribute('href').slice(1);
+      const section = document.getElementById(chId);
+      const sectionText = section ? section.textContent.toLowerCase() : '';
+      const matches = ch.textContent.toLowerCase().includes(q) || sectionText.includes(q);
+      ch.classList.toggle('hidden', !matches);
+      // find sub-links until next chapter-link
+      let next = ch.nextElementSibling;
+      while (next && !next.classList.contains('chapter-link')) {
+        const subMatches = next.textContent.toLowerCase().includes(q) || sectionText.includes(q);
+        next.classList.toggle('hidden', !matches && !subMatches);
+        next = next.nextElementSibling;
+      }
+    });
+  });
+
+  // Active link on scroll (intersection observer)
+  const sections = content.querySelectorAll('section.chapter, h2[id], h3[id]');
+  const sectionIds = [];
+  sections.forEach(s => { if (s.id) sectionIds.push(s.id); });
+
+  // Build a map of all h2 elements for right TOC
+  function updateRightToc(activeChapterId) {
+    rightTocLinks.innerHTML = '';
+    const chapter = document.getElementById(activeChapterId);
+    if (!chapter) return;
+    const headings = chapter.querySelectorAll('h2[id], h3[id]');
+    headings.forEach(h => {
+      const a = document.createElement('a');
+      a.href = '#' + h.id;
+      a.textContent = h.textContent;
+      a.style.paddingLeft = h.tagName === 'H3' ? '1.2rem' : '0.7rem';
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        h.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+      rightTocLinks.appendChild(a);
+    });
+  }
+
+  // Scroll spy
+  let ticking = false;
+  function onScroll() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      const scrollY = window.scrollY + 120;
+      let currentId = 'home';
+      // Find the currently visible section
+      for (let i = sectionIds.length - 1; i >= 0; i--) {
+        const el = document.getElementById(sectionIds[i]);
+        if (el && el.offsetTop <= scrollY) {
+          currentId = sectionIds[i];
+          break;
+        }
+      }
+      // Update sidebar active
+      navLinks.forEach(link => {
+        const href = link.getAttribute('href').slice(1);
+        link.classList.toggle('active', href === currentId);
+      });
+      // Find parent chapter for right TOC
+      let chapterId = currentId;
+      const currentEl = document.getElementById(currentId);
+      if (currentEl && currentEl.tagName !== 'SECTION') {
+        const parentSection = currentEl.closest('section.chapter');
+        if (parentSection) chapterId = parentSection.id;
+      }
+      updateRightToc(chapterId);
+      // Update right TOC active
+      const rtLinks = rightTocLinks.querySelectorAll('a');
+      rtLinks.forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href').slice(1) === currentId);
+      });
+      ticking = false;
+    });
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll(); // initial
+})();
+</script>
+</body>
+</html>
