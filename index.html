@@ -56,23 +56,6 @@ body {
   max-width: 850px; width: 100%; padding: 2.5rem 2.5rem 5rem;
 }
 
-/* ===== RIGHT TOC ===== */
-.right-toc {
-  width: 220px; min-width: 220px; position: sticky; top: 2rem; align-self: flex-start;
-  padding: 1.5rem 1rem 1.5rem 0; max-height: calc(100vh - 4rem); overflow-y: auto;
-  display: none;
-}
-@media (min-width: 1200px) {
-  .right-toc { display: block; }
-  .main-content { padding-right: 0; }
-}
-.right-toc-title { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #9ca3af; margin-bottom: 0.7rem; }
-.right-toc a {
-  display: block; font-size: 0.8rem; color: #6b7280; text-decoration: none;
-  padding: 0.2rem 0; border-left: 2px solid #e5e7eb; padding-left: 0.7rem; transition: all 0.15s;
-}
-.right-toc a:hover { color: #374151; }
-.right-toc a.active { color: #b91c1c; border-left-color: #b91c1c; font-weight: 500; }
 
 /* ===== HAMBURGER ===== */
 .hamburger {
@@ -143,7 +126,6 @@ section.chapter:last-child { border-bottom: none; }
   .overlay.show { display: block; }
   .main-content { margin-left: 0; }
   .content-area { padding: 3.5rem 1.25rem 4rem; }
-  .right-toc { display: none !important; }
 }
 </style>
 </head>
@@ -273,7 +255,19 @@ section.chapter:last-child { border-bottom: none; }
   <p class="subtitle">Stanford University &middot; Department of Biomedical Data Science &amp; Dermatology</p>
   <p>The Daneshjou Lab at Stanford is a group of interdisciplinary researchers in the Department of Biomedical Data Science and Dermatology, developing and applying AI/ML methods to solve problems in medicine and health equity. The faculty PI is Professor Roxana Daneshjou, MD, PhD.</p>
   <p>This manual covers lab culture, policies, and practical guides for running research projects &mdash; including large-scale LLM experiments.</p>
-  <p class="authors">Contributors include Ank A. Agarwal, Aaron H. Fanous, MD, and Roxana Daneshjou, MD, PhD.</p>
+  <h3 style="margin-top: 2rem;">Contributors &amp; Acknowledgments</h3>
+  <p style="color: #6b7280; font-size: 0.92rem;">
+    <strong>Lab standards &amp; onboarding guide:</strong> Vicky Bikia<br>
+    <strong>Website development &amp; additional content:</strong> Ank A. Agarwal<br>
+    <strong>LLM experiment pipeline guide:</strong> Ank A. Agarwal &amp; Aaron H. Fanous, MD<br>
+    <strong>Principal Investigator:</strong> Roxana Daneshjou, MD, PhD
+  </p>
+  <p style="color: #9ca3af; font-size: 0.85rem;">
+    Portions of this manual (chapters on funding, conferences, publications, code review, code workflow, and pre-flight checklists) are adapted from the
+    <a href="https://stanfordhpds.github.io/lab_manual/" style="color: #9ca3af;">Stanford Health Policy Data Science (HPDS) Lab Manual</a>
+    by Sherri Rose, Malcolm Barrett, and Marika Cusick, used under
+    <a href="http://creativecommons.org/licenses/by-nc/4.0/" style="color: #9ca3af;">CC BY-NC 4.0</a>.
+  </p>
 </section>
 
 <!-- ==================== CHAPTER 1 ==================== -->
@@ -1455,11 +1449,6 @@ budget_cap: 500.00</code></pre>
 
 </article>
 
-<!-- ===== RIGHT TOC ===== -->
-<aside class="right-toc" id="right-toc">
-  <div class="right-toc-title">On this page</div>
-  <div id="right-toc-links"></div>
-</aside>
 </main>
 </div>
 
@@ -1472,7 +1461,6 @@ budget_cap: 500.00</code></pre>
   const sidebarNav = document.getElementById('sidebar-nav');
   const searchInput = document.getElementById('search');
   const content = document.getElementById('content');
-  const rightTocLinks = document.getElementById('right-toc-links');
   const navLinks = sidebarNav.querySelectorAll('a');
 
   // Mobile toggle
@@ -1530,25 +1518,6 @@ budget_cap: 500.00</code></pre>
   const sectionIds = [];
   sections.forEach(s => { if (s.id) sectionIds.push(s.id); });
 
-  // Build a map of all h2 elements for right TOC
-  function updateRightToc(activeChapterId) {
-    rightTocLinks.innerHTML = '';
-    const chapter = document.getElementById(activeChapterId);
-    if (!chapter) return;
-    const headings = chapter.querySelectorAll('h2[id], h3[id]');
-    headings.forEach(h => {
-      const a = document.createElement('a');
-      a.href = '#' + h.id;
-      a.textContent = h.textContent;
-      a.style.paddingLeft = h.tagName === 'H3' ? '1.2rem' : '0.7rem';
-      a.addEventListener('click', (e) => {
-        e.preventDefault();
-        h.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      });
-      rightTocLinks.appendChild(a);
-    });
-  }
-
   // Scroll spy
   let ticking = false;
   function onScroll() {
@@ -1557,7 +1526,6 @@ budget_cap: 500.00</code></pre>
     requestAnimationFrame(() => {
       const scrollY = window.scrollY + 120;
       let currentId = 'home';
-      // Find the currently visible section
       for (let i = sectionIds.length - 1; i >= 0; i--) {
         const el = document.getElementById(sectionIds[i]);
         if (el && el.offsetTop <= scrollY) {
@@ -1565,29 +1533,15 @@ budget_cap: 500.00</code></pre>
           break;
         }
       }
-      // Update sidebar active
       navLinks.forEach(link => {
         const href = link.getAttribute('href').slice(1);
         link.classList.toggle('active', href === currentId);
-      });
-      // Find parent chapter for right TOC
-      let chapterId = currentId;
-      const currentEl = document.getElementById(currentId);
-      if (currentEl && currentEl.tagName !== 'SECTION') {
-        const parentSection = currentEl.closest('section.chapter');
-        if (parentSection) chapterId = parentSection.id;
-      }
-      updateRightToc(chapterId);
-      // Update right TOC active
-      const rtLinks = rightTocLinks.querySelectorAll('a');
-      rtLinks.forEach(a => {
-        a.classList.toggle('active', a.getAttribute('href').slice(1) === currentId);
       });
       ticking = false;
     });
   }
   window.addEventListener('scroll', onScroll, { passive: true });
-  onScroll(); // initial
+  onScroll();
 })();
 </script>
 </body>
