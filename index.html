@@ -243,6 +243,15 @@ section.chapter:last-child { border-bottom: none; }
     <a href="#s11-10" class="sub-link" data-section="s11-10">11.10 Open-Source Validation</a>
     <a href="#s11-11" class="sub-link" data-section="s11-11">11.11 Parallelize API Keys</a>
     <a href="#s11-12" class="sub-link" data-section="s11-12">11.12 Order of Operations</a>
+    <a href="#ch12" class="chapter-link" data-section="ch12">12. Thinking About Projects</a>
+    <a href="#s12-1" class="sub-link" data-section="s12-1">12.1 Data Contamination</a>
+    <a href="#s12-2" class="sub-link" data-section="s12-2">12.2 Baselines Matter</a>
+    <a href="#s12-3" class="sub-link" data-section="s12-3">12.3 The "So What?" Test</a>
+    <a href="#s12-4" class="sub-link" data-section="s12-4">12.4 Negative Results</a>
+    <a href="#s12-5" class="sub-link" data-section="s12-5">12.5 Confounds in LLM Eval</a>
+    <a href="#s12-6" class="sub-link" data-section="s12-6">12.6 Clinical Framing</a>
+    <a href="#s12-7" class="sub-link" data-section="s12-7">12.7 Reviewer Anticipation</a>
+    <a href="#s12-8" class="sub-link" data-section="s12-8">12.8 Scope Creep</a>
   </div>
 </nav>
 
@@ -1190,6 +1199,139 @@ budget_cap: 500.00</code></pre>
     <li><strong>Stage 3 full run</strong> &mdash; commit to the full experiment. Monitor costs in real time.</li>
   </ol>
   <p><strong>Key insight:</strong> You should spend $0 until step 6. Steps 1&ndash;5 are entirely free (development time and free-tier APIs). Only in steps 6&ndash;8 do you spend money, and by then you've eliminated almost all risk of wasted spend.</p>
+</section>
+
+<!-- ==================== CH 12: THINKING ABOUT PROJECTS ==================== -->
+<section class="chapter" id="ch12">
+  <h1>12. Thinking About Projects</h1>
+  <p>This chapter collects hard-won insights about how to think critically about AI/ML research projects&mdash;especially in the LLM and clinical AI space. These are the kinds of things that save you months of wasted work or a desk rejection if you catch them early.</p>
+
+  <h2 id="s12-1">12.1 Data Contamination &amp; Benchmark Leakage</h2>
+  <div class="callout callout-principle">
+    <div class="callout-title">Key Question</div>
+    When evaluating a model on a benchmark, always ask: <strong>"Did this model come out after the benchmark?"</strong> If so, the benchmark data could have been in the model's training set&mdash;and your "evaluation" is actually measuring memorization, not capability.
+  </div>
+  <p>This is one of the most common blind spots in LLM research. A model that scores 90% on a benchmark it was trained on tells you nothing interesting. Watch for these signs:</p>
+  <ul>
+    <li><strong>The benchmark is publicly available on the internet</strong> (GitHub, Hugging Face, papers with appendices). If a human can Google it, a web-scraped training set probably includes it.</li>
+    <li><strong>The model was trained after the benchmark was released.</strong> GPT-4's training data likely includes benchmarks published before 2023. A 2025 model likely has even more.</li>
+    <li><strong>Performance is suspiciously high</strong> on well-known benchmarks but drops on novel or private test sets.</li>
+  </ul>
+  <div class="callout callout-example">
+    <div class="callout-title">What to Do</div>
+    Use <strong>held-out or private test sets</strong> whenever possible. If you must use a public benchmark, acknowledge the contamination risk explicitly in your paper. Better yet, create your own evaluation set&mdash;even a small one&mdash;that has never been on the internet. Also consider <strong>temporal splits</strong>: use cases published after the model's training cutoff date.
+  </div>
+
+  <h2 id="s12-2">12.2 Baselines Matter More Than You Think</h2>
+  <div class="callout callout-principle">
+    <div class="callout-title">Key Question</div>
+    Before building anything complex, ask: <strong>"What does the dumbest possible baseline score?"</strong> If a simple heuristic gets 80% and your fancy system gets 83%, that's not a paper&mdash;that's a rounding error.
+  </div>
+  <p>Many AI papers in medicine skip obvious baselines:</p>
+  <ul>
+    <li><strong>Random guessing.</strong> On a 4-option MCQ benchmark, random chance is 25%. Your model needs to substantially beat that.</li>
+    <li><strong>Majority-class prediction.</strong> If 70% of cases are "normal," a model that always says "normal" is 70% accurate. Your model's 75% accuracy is not impressive.</li>
+    <li><strong>Simple keyword matching or regex.</strong> Before using an LLM to classify text, try a regex or keyword list. You'd be surprised how often it works.</li>
+    <li><strong>Retrieval without generation.</strong> Before building RAG, try just returning the top retrieval result. If retrieval alone solves 90% of cases, the generation step may not be adding value.</li>
+  </ul>
+  <div class="callout callout-warning">
+    <div class="callout-title">Common Mistake</div>
+    Comparing your system only against other complex systems. Reviewers will ask "did you try just prompting the model directly without your framework?" If you didn't, your paper has a hole.
+  </div>
+
+  <h2 id="s12-3">12.3 The "So What?" Test</h2>
+  <div class="callout callout-principle">
+    <div class="callout-title">Key Question</div>
+    After describing your result to someone, if their first reaction is <strong>"So what?"</strong>&mdash;you have a framing problem, a significance problem, or both.
+  </div>
+  <p>Every project should be able to answer in one sentence: <strong>who cares about this result, and what would they do differently because of it?</strong></p>
+  <ul>
+    <li>"LLMs can answer medical questions" &mdash; known since 2023. So what?</li>
+    <li>"LLMs answer medical questions <em>differently</em> depending on the stated race of the patient, even when race is clinically irrelevant" &mdash; that changes how we deploy these systems. That matters.</li>
+    <li>"Our model gets 2% higher accuracy" &mdash; probably noise. So what?</li>
+    <li>"Our model gets comparable accuracy but runs 100x cheaper, enabling deployment in low-resource clinics" &mdash; now you have a story.</li>
+  </ul>
+  <p>Run this test on your project <strong>before</strong> you invest months of work, not after. If you can't articulate why anyone should care, redesign the experiment.</p>
+
+  <h2 id="s12-4">12.4 Negative Results Are Results</h2>
+  <div class="callout callout-principle">
+    <div class="callout-title">Key Question</div>
+    If your experiment shows that something <em>doesn't</em> work, ask: <strong>"Is this surprising? Would the community have expected it to work?"</strong> If yes, your negative result is publishable and valuable.
+  </div>
+  <p>Don't throw away a project just because the hypothesis was wrong. Some of the most impactful papers show that a widely believed approach doesn't actually work. But a negative result needs:</p>
+  <ul>
+    <li><strong>A clear a priori hypothesis</strong> that was reasonable (not a straw man).</li>
+    <li><strong>Sufficient statistical power</strong> to rule out the effect (not just "we tried 10 cases and it didn't work").</li>
+    <li><strong>Exploration of why</strong> it didn't work. The explanation is often more interesting than the original hypothesis.</li>
+  </ul>
+  <div class="callout callout-example">
+    <div class="callout-title">Example</div>
+    You hypothesize that chain-of-thought prompting improves diagnostic accuracy. It doesn't. But digging deeper, you find it <em>does</em> improve accuracy on complex multi-step cases while <em>hurting</em> accuracy on simple pattern-recognition cases (by overthinking). That nuance is a much better paper than "CoT helps."
+  </div>
+
+  <h2 id="s12-5">12.5 Confounds in LLM Evaluation</h2>
+  <div class="callout callout-principle">
+    <div class="callout-title">Key Question</div>
+    When you see a difference between conditions, ask: <strong>"Is there any other explanation besides the one I'm testing?"</strong> LLM experiments have unique confounds that traditional ML doesn't.
+  </div>
+  <p>Watch out for:</p>
+  <ul>
+    <li><strong>Prompt length confounds.</strong> If Condition A has longer prompts than Condition B, differences in performance could be due to context window effects, not your intervention. Control for prompt length or at least report it.</li>
+    <li><strong>Order effects.</strong> LLMs are sensitive to the order of items in a prompt. If you always list options in the same order, the model may have a positional bias. Randomize option order across runs.</li>
+    <li><strong>Temperature and sampling.</strong> At temperature=0, you get deterministic outputs but miss the variance. At temperature>0, you need multiple runs per case to estimate the distribution. One run per case at temperature=1 is noise, not data.</li>
+    <li><strong>API version drift.</strong> If you ran half your experiment in January and half in March, the model behind the API may have changed (see <a href="#s11-6">11.6 Pin Model Versions</a>).</li>
+    <li><strong>Prompt sensitivity.</strong> Small wording changes can swing accuracy by 10%+. If you only tried one prompt phrasing, you're measuring your prompt-writing skill, not the model's capability. Try at least 2&ndash;3 prompt variants.</li>
+  </ul>
+
+  <h2 id="s12-6">12.6 Clinical Framing: Think Like a Doctor, Not an Engineer</h2>
+  <div class="callout callout-principle">
+    <div class="callout-title">Key Question</div>
+    Ask: <strong>"Would a clinician actually use this? In what workflow? What would they do with the output?"</strong> If you can't answer concretely, your project may be technically interesting but clinically irrelevant.
+  </div>
+  <ul>
+    <li><strong>Accuracy isn't everything.</strong> A model that's 95% accurate but takes 30 seconds per query won't be used if the doctor can answer in 5 seconds. Think about <em>when</em> and <em>where</em> in the clinical workflow AI adds value.</li>
+    <li><strong>Failure modes matter more than average performance.</strong> A model that's 98% accurate but hallucitates drug interactions 2% of the time is dangerous. Characterize the failure modes, not just the mean accuracy.</li>
+    <li><strong>Ground truth is messy in medicine.</strong> Two expert dermatologists disagree on diagnoses ~20-30% of the time. If your "ground truth" is one doctor's opinion, your model is being evaluated against noise. Report inter-annotator agreement.</li>
+    <li><strong>Demographic subgroup analysis is not optional.</strong> If your model works great on light skin but poorly on dark skin, that's not a footnote&mdash;that's the main finding. Always break results down by available demographic variables.</li>
+  </ul>
+  <div class="callout callout-warning">
+    <div class="callout-title">Common Mistake</div>
+    Building a "clinical AI tool" without ever talking to a clinician about whether they'd use it. Talk to potential users early&mdash;ideally before you write a line of code.
+  </div>
+
+  <h2 id="s12-7">12.7 Anticipate Reviewer Objections</h2>
+  <div class="callout callout-principle">
+    <div class="callout-title">Key Question</div>
+    Before you submit, play devil's advocate: <strong>"If I were a skeptical reviewer, what would I attack?"</strong> Then run the experiment that addresses that attack <em>before</em> you submit.
+  </div>
+  <p>The most common reviewer objections in LLM/clinical AI papers:</p>
+  <ul>
+    <li><strong>"You only tested on one model."</strong> &rarr; Test on at least two model families (see <a href="#s11-10">11.10 Open-Source Validation</a>).</li>
+    <li><strong>"Your test set is too small."</strong> &rarr; Power analysis or confidence intervals. Show that your sample size is sufficient to detect a meaningful effect.</li>
+    <li><strong>"You didn't compare against [obvious baseline]."</strong> &rarr; Include simple baselines (see <a href="#s12-2">12.2</a>).</li>
+    <li><strong>"How do you know it's not data contamination?"</strong> &rarr; Address this head-on (see <a href="#s12-1">12.1</a>).</li>
+    <li><strong>"This is just prompt engineering."</strong> &rarr; If your contribution is a prompting strategy, you need to show it's robust across prompt variants, not just one magic prompt.</li>
+    <li><strong>"What about fairness/equity?"</strong> &rarr; Report subgroup performance. If you don't have demographic data, say so and flag it as a limitation.</li>
+  </ul>
+  <p>It's much cheaper to run an extra experiment now than to get a revise-and-resubmit (or rejection) and have to do it 4 months later.</p>
+
+  <h2 id="s12-8">12.8 Scope Creep: Know When to Stop</h2>
+  <div class="callout callout-principle">
+    <div class="callout-title">Key Question</div>
+    Ask yourself: <strong>"What is the minimum set of experiments that tells a complete story?"</strong> Do those experiments. Write the paper. Then stop.
+  </div>
+  <p>Research projects expand to fill available time. A common failure mode:</p>
+  <ol>
+    <li>You get your main result &mdash; it's good.</li>
+    <li>You think "but what if I also tried X?" &mdash; you run X.</li>
+    <li>X raises question Y &mdash; you run Y.</li>
+    <li>Three months later, you have 47 experiments and no paper.</li>
+  </ol>
+  <p>The right time to stop experimenting and start writing is <strong>when you can tell a coherent story with the results you have</strong>. Additional experiments are always possible. The question is whether they change the story or just add footnotes.</p>
+  <div class="callout callout-example">
+    <div class="callout-title">A Good Rule of Thumb</div>
+    If you can fill a results table with 3&ndash;5 experiments that support a clear thesis, you have a paper. Everything else is either (a) a follow-up paper or (b) a supplementary experiment you run only if a reviewer asks.
+  </div>
 </section>
 
 </article>
