@@ -129,6 +129,12 @@ section.chapter:last-child { border-bottom: none; }
 .config-block { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1rem 1.2rem; margin: 1rem 0; }
 .config-block h4 { font-size: 0.9rem; margin-bottom: 0.5rem; color: #475569; }
 
+/* ===== TABLES ===== */
+.content-area table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.92rem; }
+.content-area th, .content-area td { padding: 0.6rem 0.8rem; border: 1px solid #e5e7eb; text-align: left; }
+.content-area th { background: #f8f9fa; font-weight: 600; color: #374151; }
+.content-area tr:nth-child(even) { background: #fafafa; }
+
 /* ===== RESPONSIVE ===== */
 @media (max-width: 900px) {
   .sidebar { transform: translateX(-100%); }
@@ -159,24 +165,18 @@ section.chapter:last-child { border-bottom: none; }
   <div class="sidebar-nav" id="sidebar-nav">
     <a href="#home" class="chapter-link active" data-section="home">Home</a>
     <a href="#ch1" class="chapter-link" data-section="ch1">1. Lab Culture</a>
-    <a href="#s1-1" class="sub-link" data-section="s1-1">1.1 Mutual Respect</a>
+    <a href="#s1-1" class="sub-link" data-section="s1-1">1.1 Guiding Principles</a>
     <a href="#s1-2" class="sub-link" data-section="s1-2">1.2 Respect for Data Subjects</a>
     <a href="#s1-3" class="sub-link" data-section="s1-3">1.3 Working Hours</a>
     <a href="#s1-4" class="sub-link" data-section="s1-4">1.4 Support &amp; Accommodations</a>
     <a href="#ch2" class="chapter-link" data-section="ch2">2. General Policies</a>
-    <a href="#s2-1" class="sub-link" data-section="s2-1">2.1 Joining the Lab</a>
-    <a href="#s2-2" class="sub-link" data-section="s2-2">2.2 Onboarding</a>
-    <a href="#s2-3" class="sub-link" data-section="s2-3">2.3 Documentation</a>
-    <a href="#s2-4" class="sub-link" data-section="s2-4">2.4 Recurring Meetings</a>
-    <a href="#s2-5" class="sub-link" data-section="s2-5">2.5 Meeting Agendas</a>
-    <a href="#s2-6" class="sub-link" data-section="s2-6">2.6 Individual Development Plans</a>
-    <a href="#s2-7" class="sub-link" data-section="s2-7">2.7 Academic Progress</a>
-    <a href="#s2-8" class="sub-link" data-section="s2-8">2.8 Research Units</a>
-    <a href="#s2-9" class="sub-link" data-section="s2-9">2.9 Deadlines</a>
-    <a href="#s2-10" class="sub-link" data-section="s2-10">2.10 Lab Meetings</a>
-    <a href="#s2-11" class="sub-link" data-section="s2-11">2.11 Professional Development</a>
-    <a href="#s2-12" class="sub-link" data-section="s2-12">2.12 Recommendation Letters</a>
-    <a href="#s2-13" class="sub-link" data-section="s2-13">2.13 Communication</a>
+    <a href="#s2-1" class="sub-link" data-section="s2-1">2.1 Pre-Onboarding</a>
+    <a href="#s2-2" class="sub-link" data-section="s2-2">2.2 Onboarding Checklist</a>
+    <a href="#s2-3" class="sub-link" data-section="s2-3">2.3 Post-Onboarding</a>
+    <a href="#s2-4" class="sub-link" data-section="s2-4">2.4 Weekly GAOIs</a>
+    <a href="#s2-5" class="sub-link" data-section="s2-5">2.5 Meetings</a>
+    <a href="#s2-6" class="sub-link" data-section="s2-6">2.6 Communication</a>
+    <a href="#s2-7" class="sub-link" data-section="s2-7">2.7 Recommendation Letters</a>
     <a href="#ch3" class="chapter-link" data-section="ch3">3. Funding</a>
     <a href="#s3-1" class="sub-link" data-section="s3-1">3.1 Graduate Students</a>
     <a href="#s3-2" class="sub-link" data-section="s3-2">3.2 Postdocs</a>
@@ -191,9 +191,11 @@ section.chapter:last-child { border-bottom: none; }
     <a href="#s4-7" class="sub-link" data-section="s4-7">4.7 Simulated Data</a>
     <a href="#ch5" class="chapter-link" data-section="ch5">5. Computing Resources</a>
     <a href="#s5-1" class="sub-link" data-section="s5-1">5.1 Sherlock Cluster</a>
-    <a href="#s5-2" class="sub-link" data-section="s5-2">5.2 Who to Ask for Help</a>
-    <a href="#s5-3" class="sub-link" data-section="s5-3">5.3 GPUs vs APIs</a>
-    <a href="#s5-4" class="sub-link" data-section="s5-4">5.4 Software</a>
+    <a href="#s5-2" class="sub-link" data-section="s5-2">5.2 OAK Storage</a>
+    <a href="#s5-3" class="sub-link" data-section="s5-3">5.3 Nero GCP</a>
+    <a href="#s5-4" class="sub-link" data-section="s5-4">5.4 Who to Ask</a>
+    <a href="#s5-5" class="sub-link" data-section="s5-5">5.5 GPUs vs APIs</a>
+    <a href="#s5-6" class="sub-link" data-section="s5-6">5.6 Software</a>
     <a href="#ch6" class="chapter-link" data-section="ch6">6. Conferences</a>
     <a href="#s6-1" class="sub-link" data-section="s6-1">6.1 Travel Policies</a>
     <a href="#s6-2" class="sub-link" data-section="s6-2">6.2 Slides</a>
@@ -252,6 +254,12 @@ section.chapter:last-child { border-bottom: none; }
     <a href="#s12-6" class="sub-link" data-section="s12-6">12.6 Clinical Framing</a>
     <a href="#s12-7" class="sub-link" data-section="s12-7">12.7 Reviewer Anticipation</a>
     <a href="#s12-8" class="sub-link" data-section="s12-8">12.8 Scope Creep</a>
+    <a href="#ch13" class="chapter-link" data-section="ch13">13. Presentations</a>
+    <a href="#s13-1" class="sub-link" data-section="s13-1">13.1 Format &amp; Storage</a>
+    <a href="#s13-2" class="sub-link" data-section="s13-2">13.2 Slide Design</a>
+    <a href="#s13-3" class="sub-link" data-section="s13-3">13.3 Delivery &amp; Pacing</a>
+    <a href="#s13-4" class="sub-link" data-section="s13-4">13.4 Common Mistakes</a>
+    <a href="#ch14" class="chapter-link" data-section="ch14">14. FAQs</a>
   </div>
 </nav>
 
@@ -271,21 +279,22 @@ section.chapter:last-child { border-bottom: none; }
 <!-- ==================== CHAPTER 1 ==================== -->
 <section class="chapter" id="ch1">
   <h1>1. Lab Culture</h1>
-  <div class="missing-info-banner">
-    <strong>&#9888; Needs Daneshjou Lab Info</strong> &mdash; This section is adapted from the
-    <a href="https://stanfordhpds.github.io/lab_manual/">HPDS Lab Manual</a>.
-    Replace with Daneshjou Lab-specific content.
-  </div>
+  <p class="subtitle" style="font-style: italic; color: #6b7280;">Aim for progress not perfection. The enemy of done is perfect. Iterate quickly, ask questions and set frequent touchpoints!</p>
 
-  <h2 id="s1-1">1.1 Mutual Respect in the Lab</h2>
-  <p>We strive to maintain a culture of mutual respect within the Daneshjou Lab. This means:</p>
-  <ul>
-    <li><strong>Active listening.</strong> When someone is speaking, give them your full attention. Avoid interrupting or formulating your response while they are still talking.</li>
-    <li><strong>Don't dominate conversations.</strong> Make space for others to contribute, especially those who are quieter or more junior. Actively invite others' perspectives.</li>
-    <li><strong>Be prepared.</strong> Come to meetings having completed the work you committed to, having read the materials, and ready to contribute constructively.</li>
-    <li><strong>Start and end meetings on time.</strong> Respect everyone's schedule by beginning promptly and wrapping up when scheduled. If a discussion needs to continue, schedule a follow-up rather than running over.</li>
-  </ul>
-  <p>Science is a team effort, and the quality of our collaboration directly impacts the quality of our research.</p>
+  <h2 id="s1-1">1.1 Roxana's Guiding Principles</h2>
+  <div class="callout callout-principle">
+    <div class="callout-title">From Dr. Daneshjou</div>
+    <ul>
+      <li><strong>Your health and well-being are of utmost importance.</strong> I care about how you are doing. We work hard, but we do not sacrifice well-being or health.</li>
+      <li><strong>Family first.</strong> Family emergencies, weddings, etc. are incredibly important. Let me know if there is something you need to take care of.</li>
+      <li><strong>Honesty and integrity above all.</strong> I care about it more than "where you publish."</li>
+      <li><strong>Mistakes happen.</strong> Admitting your mistakes (coding issue, results wrong, data deleted, etc.) is so important to me. I will never be mad about a mistake. Please don't hide it.</li>
+      <li><strong>Quality over venue.</strong> We want to publish good work. If it's not ready for a deadline, I'd rather pick a different venue than publish something subpar.</li>
+      <li><strong>Happiness matters.</strong> I want people in the lab to be happy and enjoy working together. If there is something that is hampering that, please let me know.</li>
+      <li><strong>This lab is collaborative.</strong> We are here to help each other succeed. We are here to celebrate each other's successes.</li>
+      <li><strong>Focus on doing good work.</strong> Good work will always shine through regardless of publication venue.</li>
+    </ul>
+  </div>
 
   <h2 id="s1-2">1.2 Respect for People Represented in Study Data</h2>
   <p>We hold deep respect for the communities and individuals whose data we study. Every data point represents a real person with a real story. This demands:</p>
@@ -318,92 +327,81 @@ section.chapter:last-child { border-bottom: none; }
 <!-- ==================== CHAPTER 2 ==================== -->
 <section class="chapter" id="ch2">
   <h1>2. General Policies</h1>
-  <div class="missing-info-banner">
-    <strong>&#9888; Needs Daneshjou Lab Info</strong> &mdash; This section is adapted from the
-    <a href="https://stanfordhpds.github.io/lab_manual/">HPDS Lab Manual</a>.
-    Replace with Daneshjou Lab-specific content.
+
+  <h2 id="s2-1">2.1 Pre-Onboarding</h2>
+  <p>Before officially joining the Daneshjou Lab, new members must complete the following steps:</p>
+  <ol>
+    <li><strong>Meet with the PI.</strong> Schedule an introductory meeting with Dr. Daneshjou to discuss your interests, background, and potential projects.</li>
+    <li><strong>Get assigned a project.</strong> You will be matched with a project based on your skills and the lab's current needs.</li>
+    <li><strong>Draft a Research Plan.</strong> Using the lab's Research Plan template, write a research plan for your project. This should include aims, methods, timeline, and expected outcomes.</li>
+    <li><strong>Present in lab meeting.</strong> Present your research plan to the lab for feedback before starting work.</li>
+    <li><strong>Set up GitHub and VS Code.</strong> Create a GitHub account (if you don't have one), install VS Code, and familiarize yourself with Git basics.</li>
+    <li><strong>Set up commit signature verification.</strong> Configure GPG or SSH signing for your Git commits to ensure all contributions are verified.</li>
+    <li><strong>Demonstrate coding proficiency.</strong> Make <strong>30+ commits</strong> to a project repository to demonstrate active engagement and basic coding workflow before being considered fully onboarded.</li>
+  </ol>
+
+  <h2 id="s2-2">2.2 Onboarding Checklist</h2>
+  <p>Use this checklist to track your onboarding progress:</p>
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Task</th>
+        <th>Details</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>1</td><td>Meet with PI</td><td>Introductory meeting with Dr. Daneshjou</td></tr>
+      <tr><td>2</td><td>Review Lab Standards</td><td>Read this lab manual in full</td></tr>
+      <tr><td>3</td><td>Draft Research Plan</td><td>Use the lab template; include aims, methods, timeline</td></tr>
+      <tr><td>4</td><td>Present in Lab Meeting</td><td>Present your research plan for feedback</td></tr>
+      <tr><td>5</td><td>GitHub Account</td><td>Create account and share username with lab</td></tr>
+      <tr><td>6</td><td>Personal Repo</td><td>Create a personal project repository in the lab GitHub org</td></tr>
+      <tr><td>7</td><td>Commit Signature Verification</td><td>Set up GPG or SSH signing for commits</td></tr>
+      <tr><td>8</td><td>30+ Commits</td><td>Demonstrate active coding engagement</td></tr>
+      <tr><td>9</td><td>Slack Access</td><td>Join the Daneshjou Lab Slack workspace</td></tr>
+      <tr><td>10</td><td>Calendar Invite</td><td>Get added to lab meeting calendar &mdash; contact <a href="mailto:daneshjoulab@stanford.edu">daneshjoulab@stanford.edu</a></td></tr>
+      <tr><td>11</td><td>Google Drive Access</td><td>Get added to the shared lab drive &mdash; contact <a href="mailto:daneshjoulab@stanford.edu">daneshjoulab@stanford.edu</a></td></tr>
+    </tbody>
+  </table>
+
+  <h2 id="s2-3">2.3 Post-Onboarding Requirements</h2>
+  <p>Once onboarded, all lab members are expected to maintain the following ongoing commitments:</p>
+  <ul>
+    <li><strong>Slack communication.</strong> Slack is the primary communication channel. Check it regularly and respond promptly during working hours.</li>
+    <li><strong>Weekly GAOIs.</strong> Submit your Goals, Accomplishments, Objectives, and Issues (GAOIs) to Roxana by <strong>Monday at noon</strong> every week. See <a href="#s2-4">Section 2.4</a> for details.</li>
+    <li><strong>Weekly meetings with Project Lead.</strong> Meet with your project lead weekly to discuss progress and next steps.</li>
+    <li><strong>Bi-weekly meetings with PI.</strong> Meet with Dr. Daneshjou every two weeks for individual check-ins.</li>
+    <li><strong>30+ commits per month.</strong> Maintain active coding engagement with at least 30 commits per month to your project repositories.</li>
+    <li><strong>Accountability policy.</strong> If you are consistently not meeting these requirements, Dr. Daneshjou will discuss a plan with you. The lab's success depends on everyone pulling their weight.</li>
+  </ul>
+
+  <h2 id="s2-4">2.4 Weekly GAOIs</h2>
+  <p>Every week, submit a short GAOI update to Roxana by <strong>Monday at noon</strong>. GAOI stands for:</p>
+  <ul>
+    <li><strong>Goals:</strong> Your overarching goals for the next 6 months to 1 year. These are big-picture aspirations (e.g., "Submit paper to Nature Medicine," "Complete benchmark dataset"). They don't change often.</li>
+    <li><strong>Accomplishments:</strong> What you actually did this past week. Be specific &mdash; "ran 3 experiments on GPT-4o" is better than "worked on project."</li>
+    <li><strong>Objectives:</strong> Short-term goals for your current project over the next 1&ndash;2 weeks. These are concrete, actionable items.</li>
+    <li><strong>Issues:</strong> Anything blocking your progress. This includes technical blockers, resource needs, scheduling conflicts, or life circumstances that are affecting your work. Don't hesitate to flag personal issues &mdash; the lab is here to support you.</li>
+  </ul>
+  <div class="callout callout-principle">
+    <div class="callout-title">Why GAOIs Matter</div>
+    <p>GAOIs keep everyone aligned. They help Roxana understand where you are, where you're headed, and where you need help &mdash; without needing a meeting for every update. They also help <em>you</em> stay focused and accountable to yourself.</p>
   </div>
 
-  <h2 id="s2-1">2.1 Joining the Lab</h2>
-  <p>Prospective lab members should reach out to Dr. Daneshjou directly. We welcome students and postdocs from a range of backgrounds, including biomedical informatics, computer science, statistics, medicine, and related fields. When considering new members, we look for intellectual curiosity, a collaborative mindset, and a commitment to rigorous research.</p>
-
-  <h2 id="s2-2">2.2 Onboarding</h2>
-  <p>When you join the lab:</p>
+  <h2 id="s2-5">2.5 Meetings</h2>
+  <p>The lab has a structured meeting cadence:</p>
   <ul>
-    <li>You will be added to the lab's <strong>GitHub organization</strong>. Make sure you have a GitHub account ready.</li>
-    <li>Review all <strong>internal documentation</strong>, including this manual, relevant IRB protocols, and existing project documentation.</li>
-    <li>Set up your computing environment (see <a href="#ch5">Chapter 5: Computing Resources</a>).</li>
-    <li>Introduce yourself on Slack and attend the next lab meeting.</li>
+    <li><strong>Weekly with Project Lead:</strong> Discuss day-to-day progress, debug issues, plan next steps. These are your most frequent touchpoint.</li>
+    <li><strong>Bi-weekly with PI:</strong> Meet with Dr. Daneshjou every two weeks for higher-level guidance, project direction, and career development.</li>
+    <li><strong>Lab meetings:</strong> All lab members attend weekly lab meetings for project presentations, feedback, and knowledge sharing.</li>
   </ul>
+  <p>Come to every meeting prepared with an agenda. Share updates, questions, and blockers. Document action items and follow through.</p>
 
-  <h2 id="s2-3">2.3 Documentation</h2>
-  <p>Good documentation is the backbone of reproducible research. In the Daneshjou Lab:</p>
-  <ul>
-    <li>All significant decisions, methods, and findings should be <strong>written down</strong>.</li>
-    <li>Meeting agendas and notes should be documented (see below).</li>
-    <li>All code and analysis should be version-controlled with <strong>Git and GitHub</strong>.</li>
-    <li>Project documentation should be maintained alongside code in the repository.</li>
-  </ul>
+  <h2 id="s2-6">2.6 Communication</h2>
+  <p><strong>Slack</strong> is our primary communication tool. Use it for quick questions, updates, sharing papers, and coordinating meetings. For longer discussions or sensitive topics, schedule a meeting or use email. Keep Slack channels organized and on-topic.</p>
 
-  <h2 id="s2-4">2.4 Recurring Meetings</h2>
-  <p>Each trainee meets with Dr. Daneshjou on a <strong>weekly or biweekly</strong> basis for individual check-ins. These meetings are your time to discuss progress, roadblocks, and next steps. Additional meetings can always be scheduled as needed.</p>
-
-  <h2 id="s2-5">2.5 Meeting Agendas</h2>
-  <p>For every meeting, <strong>prepare an agenda in advance</strong>. Share it with attendees before the meeting. A good agenda includes:</p>
-  <ul>
-    <li>Updates since the last meeting</li>
-    <li>Questions or decisions needed</li>
-    <li>Proposed next steps</li>
-  </ul>
-  <p>After the meeting, note down action items and who is responsible for each.</p>
-
-  <h2 id="s2-6">2.6 Individual Development Plans</h2>
-  <p>All trainees should create and maintain an Individual Development Plan (IDP) in consultation with Dr. Daneshjou. Your IDP should outline:</p>
-  <ul>
-    <li>Your short- and long-term career goals</li>
-    <li>Skills you want to develop</li>
-    <li>Timeline and milestones</li>
-    <li>Resources and support you need</li>
-  </ul>
-  <p>Review your IDP with Dr. Daneshjou at least once per year.</p>
-
-  <h2 id="s2-7">2.7 Academic Progress</h2>
-  <p>Graduate students should stay on track with their department's milestones (qualifying exams, thesis proposals, committee meetings, etc.). Dr. Daneshjou will help you plan your research to align with your academic requirements, but you are responsible for knowing your deadlines and requirements.</p>
-
-  <h2 id="s2-8">2.8 Research Units</h2>
-  <p>Research in the lab is organized into <strong>research units</strong> &mdash; focused projects or themes. Each unit has a lead researcher and may involve multiple collaborators. Units allow us to maintain focus while pursuing multiple lines of inquiry.</p>
-
-  <h2 id="s2-9">2.9 Deadlines</h2>
-  <p>We set <strong>ambitious yet feasible</strong> deadlines. Key principles:</p>
-  <ul>
-    <li>When you commit to a deadline, do your best to meet it.</li>
-    <li>If you realize you can't meet a deadline, <strong>communicate proactively</strong>. Tell Dr. Daneshjou as soon as possible so we can adjust plans.</li>
-    <li>It's far better to flag a problem early than to miss a deadline silently.</li>
-    <li>For conference and journal deadlines, plan backwards from the submission date, building in time for code review, feedback, and revision.</li>
-  </ul>
-
-  <h2 id="s2-10">2.10 Lab Meetings</h2>
-  <p>Lab meetings are held regularly (typically weekly). They serve as a venue for:</p>
-  <ul>
-    <li>Presenting ongoing work and getting feedback</li>
-    <li>Practicing conference talks or job talks</li>
-    <li>Journal clubs and paper discussions</li>
-    <li>Onboarding new members and sharing knowledge</li>
-  </ul>
-  <p>All lab members are expected to attend. Presenters should prepare polished slides and be ready for constructive discussion.</p>
-
-  <h2 id="s2-11">2.11 Professional Development</h2>
-  <p>The Daneshjou Lab supports your professional growth. This includes:</p>
-  <ul>
-    <li>Attending and presenting at conferences</li>
-    <li>Taking relevant courses and workshops</li>
-    <li>Developing teaching and mentoring skills</li>
-    <li>Building your professional network</li>
-    <li>Writing grants and fellowship applications</li>
-  </ul>
-  <p>Discuss your professional development goals with Dr. Daneshjou during your IDP reviews.</p>
-
-  <h2 id="s2-12">2.12 Recommendation Letters</h2>
+  <h2 id="s2-7">2.7 Recommendation Letters</h2>
   <p>Dr. Daneshjou is happy to write recommendation letters for lab members. Please provide at least <strong>4 weeks notice</strong> and include:</p>
   <ul>
     <li>The opportunity you're applying for and its deadline</li>
@@ -411,15 +409,6 @@ section.chapter:last-child { border-bottom: none; }
     <li>Specific points you'd like highlighted</li>
     <li>Submission instructions</li>
   </ul>
-
-  <h2 id="s2-13">2.13 Communication</h2>
-  <p><strong>Slack</strong> is our primary communication tool. Use it for:</p>
-  <ul>
-    <li>Quick questions and updates</li>
-    <li>Sharing papers and resources</li>
-    <li>Coordinating meetings</li>
-  </ul>
-  <p>For longer discussions or sensitive topics, schedule a meeting or use email. Keep Slack channels organized and on-topic.</p>
 </section>
 
 <!-- ==================== CHAPTER 3 ==================== -->
@@ -460,11 +449,6 @@ section.chapter:last-child { border-bottom: none; }
 <!-- ==================== CHAPTER 4 ==================== -->
 <section class="chapter" id="ch4">
   <h1>4. Data</h1>
-  <div class="missing-info-banner">
-    <strong>&#9888; Needs Daneshjou Lab Info</strong> &mdash; This section is adapted from the
-    <a href="https://stanfordhpds.github.io/lab_manual/">HPDS Lab Manual</a>.
-    Replace with Daneshjou Lab-specific content.
-  </div>
 
   <p>We hold deep respect for the individuals and communities represented in our data. Every dataset contains information about real people, and we treat it accordingly.</p>
   <p>The cardinal rule of data handling in this lab:</p>
@@ -489,13 +473,18 @@ section.chapter:last-child { border-bottom: none; }
   </ul>
 
   <h2 id="s4-3">4.3 IRBs</h2>
-  <p>Most research involving human data requires <strong>Institutional Review Board (IRB)</strong> approval. At Stanford, IRB protocols are managed through <a href="https://irb.stanford.edu/">Stanford's IRB office</a>. Key points:</p>
-  <ul>
-    <li>Determine whether your research requires IRB review before beginning any data work.</li>
-    <li>Many secondary data analyses may qualify for exemption, but you still need to apply.</li>
-    <li>IRB amendments are needed when you change your research scope, data sources, or methods.</li>
-    <li>Dr. Daneshjou can help you navigate the IRB process.</li>
-  </ul>
+  <p>Most research involving human data requires <strong>Institutional Review Board (IRB)</strong> approval. At Stanford, IRB protocols are managed through <a href="https://irb.stanford.edu/">Stanford's IRB office</a>.</p>
+  <p>To get added to an IRB protocol in the Daneshjou Lab, contact <strong>Sana Kidwai</strong> at <a href="mailto:kidwai@stanford.edu">kidwai@stanford.edu</a>.</p>
+  <p><strong>Required trainings</strong> before being added to any IRB:</p>
+  <ol>
+    <li><strong>CITI Group 7 Training</strong> &mdash; Complete through the <a href="https://www.citiprogram.org/">CITI Program website</a>.</li>
+    <li><strong>HIPAA Protecting Patient Privacy 2025</strong> (PRIV-2025-WEB) &mdash; Available via <a href="https://axess.stanford.edu/">Axess</a>.</li>
+    <li><strong>HIPAA Privacy for Researchers 2025</strong> (CLIN-2025-WEB) &mdash; Available via <a href="https://axess.stanford.edu/">Axess</a>.</li>
+  </ol>
+  <div class="callout callout-example">
+    <div class="callout-title">Tip</div>
+    <p>If the HIPAA course links don't open directly, navigate to <a href="https://axess.stanford.edu/">Axess</a> and find them under <strong>STARS</strong> (Stanford Training And Resource System).</p>
+  </div>
 
   <h2 id="s4-4">4.4 Data at Stanford</h2>
   <p>Stanford has several institutional data resources:</p>
@@ -530,32 +519,60 @@ section.chapter:last-child { border-bottom: none; }
 <!-- ==================== CHAPTER 5 ==================== -->
 <section class="chapter" id="ch5">
   <h1>5. Computing Resources</h1>
-  <div class="missing-info-banner">
-    <strong>&#9888; Needs Daneshjou Lab Info</strong> &mdash; This section is partially filled with Daneshjou Lab content.
-    Sections marked as HPDS-adapted should be replaced with Daneshjou Lab-specific content.
-    Adapted from the <a href="https://stanfordhpds.github.io/lab_manual/">HPDS Lab Manual</a>.
-  </div>
 
   <h2 id="s5-1">5.1 Sherlock Cluster</h2>
-  <p><a href="https://www.sherlock.stanford.edu/">Sherlock</a> is Stanford's shared HPC (high-performance computing) cluster. It provides access to CPUs, GPUs, and large-memory nodes for computationally intensive research.</p>
-  <p>Key information for Daneshjou Lab members:</p>
+  <p><a href="https://www.sherlock.stanford.edu/">Sherlock</a> is Stanford's HPC (high-performance computing) cluster, designed for large-scale computation and data-intensive workflows.</p>
+  <div class="callout callout-warning">
+    <div class="callout-title">Important</div>
+    <p>Sherlock is <strong>NOT compliant for protected health information (PHI).</strong> Do not store or process PHI on Sherlock.</p>
+  </div>
+  <p>Sherlock is used for:</p>
   <ul>
-    <li>The lab has access to <strong>GPU nodes</strong> on Sherlock for deep learning and LLM work.</li>
-    <li>Request access through Dr. Daneshjou and the Sherlock team.</li>
-    <li>For help getting started on Sherlock, contact <strong>Aaron Fanous</strong> (see Section 5.2).</li>
-    <li>Use SLURM for job scheduling. See the <a href="https://www.sherlock.stanford.edu/docs/">Sherlock documentation</a> for guides.</li>
-    <li>Store data on Sherlock's scratch or lab storage &mdash; never on login nodes.</li>
+    <li>Training ML models (including large deep learning and LLM fine-tuning)</li>
+    <li>Running computationally expensive simulations</li>
+    <li>Handling large biomedical datasets (non-PHI)</li>
+  </ul>
+  <p><strong>Access:</strong> Sherlock access is granted through the lab. Reach out to <a href="mailto:daneshjoulab@stanford.edu">daneshjoulab@stanford.edu</a> to get set up.</p>
+  <p>Key topics to review when getting started:</p>
+  <ul>
+    <li>Logging in via SSH</li>
+    <li>Using SLURM job schedulers (see <a href="https://www.sherlock.stanford.edu/docs/">Sherlock documentation</a>)</li>
+    <li>Setting up conda/virtual environments</li>
+    <li>Requesting GPUs and memory</li>
+    <li>Data storage best practices: <code>$SCRATCH</code> vs <code>$HOME</code> vs <code>$GROUP</code></li>
   </ul>
 
-  <h2 id="s5-2">5.2 Who to Ask for Help</h2>
+  <h2 id="s5-2">5.2 OAK Storage</h2>
+  <p><strong>OAK</strong> is Stanford's research computing storage system for large-scale data storage and collaboration. Use OAK when your projects require many terabytes of storage beyond Sherlock's <code>$HOME</code> or <code>$SCRATCH</code> allocations.</p>
+  <p>Key points:</p>
+  <ul>
+    <li><strong>Long-term, large-scale storage</strong> for research data</li>
+    <li><strong>NOT HIPAA-compliant</strong> &mdash; do not store PHI on OAK</li>
+    <li><strong>Mounted on Sherlock</strong> for convenient access from compute jobs</li>
+    <li>Provides large shared lab/group directories</li>
+  </ul>
+  <p><strong>Access:</strong> Reach out to <a href="mailto:daneshjoulab@stanford.edu">daneshjoulab@stanford.edu</a> for OAK allocations.</p>
+  <p>Key topics to review:</p>
+  <ul>
+    <li>Mounting and accessing OAK from Sherlock</li>
+    <li>Data transfer best practices</li>
+    <li>Quota management</li>
+    <li>Backup and retention policies</li>
+  </ul>
+
+  <h2 id="s5-3">5.3 Nero GCP</h2>
+  <p>[To be added soon.]</p>
+
+  <h2 id="s5-4">5.4 Who to Ask for Help</h2>
   <p>When you need computing resources or run into issues, here's who to contact:</p>
   <ul>
-    <li><strong>API access and credits:</strong> Email <code>daneshjoulab@</code> for API key requests. Contact <strong>Vicky</strong> for information about available API credits and budget.</li>
+    <li><strong>API access and keys:</strong> Email <a href="mailto:daneshjoulab@stanford.edu">daneshjoulab@stanford.edu</a> with subject line <strong>"SECURE: [DaneshjouLab] API Key Request"</strong>. Include a brief description of your task and the model you intend to use. Keys are sent securely via Stanford Secure Mail.</li>
+    <li><strong>GCP access:</strong> After being granted permission to access a specific project on GCP and added to the respective IRB, reach out to <a href="mailto:daneshjoulab@stanford.edu">daneshjoulab@stanford.edu</a>.</li>
     <li><strong>Sherlock cluster help:</strong> Contact <strong>Aaron Fanous</strong> for guidance on setting up jobs, GPU allocation, and troubleshooting Sherlock issues.</li>
     <li><strong>General computing questions:</strong> Post in the lab's Slack computing channel. Chances are someone has encountered your issue before.</li>
   </ul>
 
-  <h2 id="s5-3">5.3 Choosing Your Compute: GPUs vs APIs</h2>
+  <h2 id="s5-5">5.5 Choosing Your Compute: GPUs vs APIs</h2>
   <p>A key strategic decision in any LLM project is whether to use <strong>open-source models on Sherlock GPUs</strong> or <strong>commercial APIs</strong> (OpenAI, Anthropic, Google, etc.).</p>
 
   <div class="callout callout-principle">
@@ -575,11 +592,7 @@ section.chapter:last-child { border-bottom: none; }
     <p>For a study with 12 configurations &times; 200 questions &times; 3 runs = <strong>7,200 API calls</strong>, running on GPT-4o might cost $300&ndash;$500. But if you also validate on Llama-3-70B via Sherlock (free), you've doubled your evidence for zero additional cost.</p>
   </div>
 
-  <h2 id="s5-4">5.4 Software</h2>
-  <div class="missing-info-banner">
-    <strong>&#9888; Needs Daneshjou Lab Info</strong> &mdash; This subsection is adapted from the
-    <a href="https://stanfordhpds.github.io/lab_manual/">HPDS Lab Manual</a>.
-  </div>
+  <h2 id="s5-6">5.6 Software</h2>
   <p>Common software used in the lab:</p>
   <ul>
     <li><strong>Python:</strong> Our primary language for ML/AI research. Use virtual environments (venv, conda, or uv) for every project.</li>
@@ -832,14 +845,38 @@ section.chapter:last-child { border-bottom: none; }
   </ul>
   <p>Configure these tools in your project and run them before every commit (ideally via pre-commit hooks).</p>
 
-  <h2 id="s9-3">9.3 Naming Things</h2>
-  <p>Good names make code self-documenting:</p>
+  <h2 id="s9-3">9.3 Naming Conventions</h2>
+  <p>Good names make code self-documenting. Use <code>snake_case</code> for variables, functions, and file names. Be <strong>descriptive</strong>: <code>patient_age</code> not <code>x</code>, <code>calculate_accuracy</code> not <code>func1</code>. Avoid abbreviations unless universally understood.</p>
+
+  <h3>Folder Naming</h3>
   <ul>
-    <li>Use <code>snake_case</code> for variables, functions, and file names.</li>
-    <li>Be <strong>descriptive</strong>: <code>patient_age</code> not <code>x</code>, <code>calculate_accuracy</code> not <code>func1</code>.</li>
-    <li>Avoid abbreviations unless they're universally understood (<code>df</code> for DataFrame is fine; <code>pt_dx_cnt</code> is not).</li>
-    <li>Name files to indicate their content and order: <code>01_clean_data.py</code>, <code>02_train_model.py</code>, <code>03_evaluate.py</code>.</li>
+    <li>Use <strong>lowercase with dashes (<code>-</code>) or underscores (<code>_</code>)</strong> for readability. Example: <code>skin_imaging_pilot</code>, <code>model_outputs_2025</code></li>
+    <li>Organize <strong>broad &rarr; specific</strong>. Example: <code>projectname_subproject_data</code></li>
+    <li>Add <strong>dates or version numbers</strong> when relevant. Example: <code>checkpoints_v2</code>, <code>model_runs_2025-07</code></li>
+    <li>Avoid generic names like <code>test</code>, <code>new</code>, <code>final</code>, <code>data</code>, or your name.</li>
   </ul>
+
+  <h3>File Naming</h3>
+  <ul>
+    <li>Be <strong>descriptive but concise</strong>. Example: <code>discharge_evaluator_v2.py</code>, <code>llama_eval_2025-07-05.json</code></li>
+    <li>Use <strong>ISO date format (YYYY-MM-DD)</strong> for version tracking. Example: <code>summary_stats_2025-07-05.csv</code></li>
+    <li>Always include a <strong><code>README.md</code></strong> file in every folder.</li>
+    <li>Name files to indicate content and order: <code>01_clean_data.py</code>, <code>02_train_model.py</code>, <code>03_evaluate.py</code></li>
+  </ul>
+
+  <h3>Good vs. Bad Examples</h3>
+  <table>
+    <thead>
+      <tr><th>Bad</th><th>Good</th><th>Why</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>data/</code></td><td><code>skin_imaging_pilot/</code></td><td>Descriptive, identifies the project</td></tr>
+      <tr><td><code>final_v2_FINAL/</code></td><td><code>checkpoints_v2/</code></td><td>Versioned clearly, no ambiguity</td></tr>
+      <tr><td><code>test.py</code></td><td><code>test_prompt_parsing.py</code></td><td>Says what it tests</td></tr>
+      <tr><td><code>results.csv</code></td><td><code>gpt4o_accuracy_2025-07-05.csv</code></td><td>Model, metric, and date in the name</td></tr>
+      <tr><td><code>johns_stuff/</code></td><td><code>llm_evaluation_pipeline/</code></td><td>Content-based, not person-based</td></tr>
+    </tbody>
+  </table>
 
   <h2 id="s9-4">9.4 Project Organization</h2>
   <p>Organize your project with descriptive folder names:</p>
@@ -859,6 +896,7 @@ section.chapter:last-child { border-bottom: none; }
     <li><strong>No absolute paths in code.</strong> Use relative paths or environment variables.</li>
     <li>Be clear about which environments are <strong>protected</strong> (production, shared clusters) vs. development.</li>
   </ul>
+  <p>As you advance with your project, you may want to create a <strong>Product Requirements Document (PRD)</strong> to guide development. A PRD outlines the goals, scope, features, and success criteria for a project &mdash; keeping everyone aligned on what is being built and why.</p>
 
   <h2 id="s9-5">9.5 Reproducible Documents with Quarto</h2>
   <p><a href="https://quarto.org/">Quarto</a> enables you to create reproducible documents that combine code, results, and narrative. Use Quarto for:</p>
@@ -1332,6 +1370,87 @@ budget_cap: 500.00</code></pre>
     <div class="callout-title">A Good Rule of Thumb</div>
     If you can fill a results table with 3&ndash;5 experiments that support a clear thesis, you have a paper. Everything else is either (a) a follow-up paper or (b) a supplementary experiment you run only if a reviewer asks.
   </div>
+</section>
+
+<!-- ==================== CHAPTER 13 ==================== -->
+<section class="chapter" id="ch13">
+  <h1>13. Presentations</h1>
+
+  <h2 id="s13-1">13.1 Format &amp; Storage</h2>
+  <ul>
+    <li>All presentations should be prepared as <strong>Google Slides</strong>.</li>
+    <li>Decks must be pushed to the dedicated folder in the shared lab drive.</li>
+    <li>Project updates and results should be included for transparency.</li>
+  </ul>
+
+  <h2 id="s13-2">13.2 Slide Design Principles</h2>
+  <div class="callout callout-principle">
+    <div class="callout-title">Key Principle</div>
+    <p>Slides should have the <strong>minimum amount of text possible.</strong> If you can say it out loud, don't write it on the slide. Slides are a visual aid, not a teleprompter.</p>
+  </div>
+  <ul>
+    <li><strong>One idea per slide.</strong> If a slide needs a paragraph of text, it should be two slides.</li>
+    <li><strong>Use visuals over text.</strong> A well-designed figure, diagram, or table communicates more than bullet points.</li>
+    <li><strong>Large fonts.</strong> If the person in the back row can't read it, the font is too small. Body text should be at least 24pt.</li>
+    <li><strong>Consistent styling.</strong> Use the same fonts, colors, and layout patterns throughout your deck.</li>
+    <li><strong>White space is your friend.</strong> A clean slide with breathing room is always better than a crammed one.</li>
+    <li><strong>No walls of text.</strong> If you find yourself shrinking text to fit, you have too much content on the slide. Split it.</li>
+  </ul>
+
+  <h2 id="s13-3">13.3 Delivery &amp; Pacing</h2>
+  <div class="callout callout-principle">
+    <div class="callout-title">Key Principle</div>
+    <p><strong>Always walk your audience through content one piece at a time.</strong> Never put up a slide with 3 figures and try to explain the broad concept. Walk through each graph, each metric, each result individually.</p>
+  </div>
+  <ul>
+    <li><strong>Animate and reveal content progressively.</strong> Use animations/builds to show one point at a time. This keeps the audience's attention on what you're currently explaining, not reading ahead.</li>
+    <li><strong>One figure at a time.</strong> If you have multiple panels, reveal them sequentially and explain each one before moving to the next.</li>
+    <li><strong>Narrate the axes first.</strong> When showing a graph, always start by explaining what the x-axis and y-axis represent before discussing the data.</li>
+    <li><strong>Pause after key points.</strong> Give the audience time to absorb important findings before moving on.</li>
+    <li><strong>Tell a story.</strong> Structure your talk as: motivation &rarr; question &rarr; approach &rarr; results &rarr; implications. The audience should always know why they're looking at what they're looking at.</li>
+    <li><strong>Practice out loud.</strong> Reading slides silently is not practice. You need to hear yourself say the words and time yourself.</li>
+  </ul>
+
+  <h2 id="s13-4">13.4 Common Presentation Mistakes</h2>
+  <div class="callout callout-warning">
+    <div class="callout-title">Avoid These</div>
+    <ul>
+      <li><strong>The data dump slide.</strong> Putting up a table with 50 numbers and saying "as you can see..." &mdash; no one can see. Highlight the 2&ndash;3 numbers that matter.</li>
+      <li><strong>Reading your slides verbatim.</strong> If you're reading what's on the slide, one of you is unnecessary.</li>
+      <li><strong>Skipping slides.</strong> If you made the slide, present it. If you don't need it, delete it. Skipping slides signals disorganization.</li>
+      <li><strong>No backup slides.</strong> Always have backup/appendix slides for anticipated questions.</li>
+      <li><strong>Rushing the last third.</strong> Time your talk so you don't have to speed through results and conclusions &mdash; those are the most important parts.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ==================== CHAPTER 14 ==================== -->
+<section class="chapter" id="ch14">
+  <h1>14. FAQs</h1>
+
+  <h3>How do I get added to the Daneshjou Lab GitHub organization?</h3>
+  <p>Reach out to <a href="mailto:bikia@stanford.edu">bikia@stanford.edu</a>.</p>
+
+  <h3>How am I added to lab meeting calendar invites?</h3>
+  <p>Contact <a href="mailto:daneshjoulab@stanford.edu">daneshjoulab@stanford.edu</a>.</p>
+
+  <h3>How am I added to the Daneshjou Lab Google shared drive?</h3>
+  <p>Contact <a href="mailto:daneshjoulab@stanford.edu">daneshjoulab@stanford.edu</a>.</p>
+
+  <h3>How do I request API keys (e.g., OpenAI, Claude, etc.)?</h3>
+  <p>Email <a href="mailto:daneshjoulab@stanford.edu">daneshjoulab@stanford.edu</a> with subject line <strong>"SECURE: [DaneshjouLab] API Key Request"</strong>. Include a brief description of your task and the model you intend to use. Keys are sent securely via Stanford Secure Mail.</p>
+
+  <h3>How do I get access to Google Cloud Platform (GCP) for a specific project?</h3>
+  <p>After being granted permission to access the project on GCP and added to the respective IRB, reach out to <a href="mailto:daneshjoulab@stanford.edu">daneshjoulab@stanford.edu</a>.</p>
+
+  <h3>How do I get IRB approval to access PHI data?</h3>
+  <p>Contact <strong>Sana Kidwai</strong> at <a href="mailto:kidwai@stanford.edu">kidwai@stanford.edu</a>. You will need to complete:</p>
+  <ol>
+    <li><strong>CITI Group 7 Training</strong> (<a href="https://www.citiprogram.org/">citiprogram.org</a>)</li>
+    <li><strong>HIPAA Protecting Patient Privacy 2025</strong> (PRIV-2025-WEB) &mdash; via <a href="https://axess.stanford.edu/">Axess</a></li>
+    <li><strong>HIPAA Privacy for Researchers 2025</strong> (CLIN-2025-WEB) &mdash; via <a href="https://axess.stanford.edu/">Axess</a></li>
+  </ol>
+  <p>If the HIPAA course links don't open directly, find them in Axess under <strong>STARS</strong>.</p>
 </section>
 
 </article>
