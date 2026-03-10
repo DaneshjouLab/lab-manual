@@ -299,6 +299,7 @@ section.chapter:last-child { border-bottom: none; }
     <a href="#s13-2" class="sub-link" data-section="s13-2">13.2 Slide Design</a>
     <a href="#s13-3" class="sub-link" data-section="s13-3">13.3 Delivery &amp; Pacing</a>
     <a href="#s13-4" class="sub-link" data-section="s13-4">13.4 Common Mistakes</a>
+    <a href="#s13-5" class="sub-link" data-section="s13-5">13.5 Presenter Notes</a>
     <a href="#ch14" class="chapter-link" data-section="ch14">14. FAQs</a>
     <a href="#ch15" class="chapter-link" data-section="ch15">Contributors</a>
   </div>
@@ -1660,6 +1661,118 @@ budget_cap: 500.00</code></pre>
       <li><strong>No backup slides.</strong> Always have backup/appendix slides for anticipated questions.</li>
       <li><strong>Rushing the last third.</strong> Time your talk so you don't have to speed through results and conclusions &mdash; those are the most important parts.</li>
     </ul>
+  </div>
+
+  <h2 id="s13-5">13.5 Presenter Notes</h2>
+  <p>You should <strong>never</strong> memorize your talk word-for-word, but you <em>should</em> have notes to keep you on track. Every major presentation tool supports speaker notes that only you can see while the audience sees your slides.</p>
+
+  <h3>PowerPoint &amp; Google Slides</h3>
+  <p>Both PowerPoint and Google Slides have a built-in <strong>presenter view</strong> that shows your notes alongside the current slide. To use it:</p>
+  <ul>
+    <li><strong>PowerPoint:</strong> Click the "Notes" pane at the bottom of the editing window to add notes to any slide. When presenting, check <em>Use Presenter View</em> under the <em>Slide Show</em> tab. Your laptop will show your notes, a timer, and upcoming slides while the projector shows only the slide.</li>
+    <li><strong>Google Slides:</strong> Click <em>View &rarr; Speaker notes</em> to open the notes pane. When presenting, click the dropdown arrow next to <em>Slideshow</em> and choose <em>Presenter view</em>. A second window opens with your notes and controls.</li>
+  </ul>
+
+  <h3>PDF Slides with pdfpc (LaTeX / Beamer users)</h3>
+  <p>If you make slides in LaTeX/Beamer and present from PDF, you can still get a full presenter view using <a href="https://pdfpc.github.io/">pdfpc</a> (PDF Presenter Console). Here's how:</p>
+  <ol>
+    <li><strong>Add notes in your .tex file</strong> using the <code>\note{}</code> command after each frame:
+      <pre><code>\begin{frame}{Results}
+  % your slide content
+\end{frame}
+\note{Explain that the bar chart shows accuracy across 3 models.
+Emphasize that Model B outperforms despite lower cost.}</code></pre>
+    </li>
+    <li><strong>Compile your PDF</strong> normally with <code>pdflatex</code> or <code>latexmk</code>. The notes are embedded in the PDF metadata.</li>
+    <li><strong>Present with pdfpc</strong> instead of a regular PDF viewer:
+      <pre><code>pdfpc my_presentation.pdf</code></pre>
+      pdfpc will display the presentation fullscreen on the projector and show a presenter console on your laptop with your notes, a timer, the current slide, and a preview of the next slide.
+    </li>
+  </ol>
+  <p><strong>Install pdfpc:</strong> On macOS: <code>brew install pdfpc</code>. On Ubuntu/Debian: <code>sudo apt install pdfpc</code>.</p>
+
+  <h3>What Your Audience Sees vs. What You See</h3>
+  <p>Here's what the dual-monitor setup looks like in practice:</p>
+
+  <!-- Presenter view mockup -->
+  <div style="display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1.5rem 0; align-items: flex-end;">
+    <!-- Projector / Audience view -->
+    <div style="flex: 1; min-width: 220px; max-width: 320px;">
+      <div style="text-align: center; font-size: 0.7rem; font-weight: 600; color: #6b7280; margin-bottom: 0.4rem;">PROJECTOR (audience sees this)</div>
+      <div style="border: 2px solid #d1d5db; border-radius: 6px; overflow: hidden;">
+        <div class="slide-mock-body" style="min-height: 180px; border: none; border-radius: 0;">
+          <div class="slide-title" style="font-size: 0.8rem;">Results: Model Comparison</div>
+          <div style="display:flex;align-items:flex-end;justify-content:center;gap:8px;padding:12px 8px;flex:1;">
+            <div style="text-align:center;">
+              <div style="width:36px;height:80px;background:#ef4444;border-radius:3px 3px 0 0;"></div>
+              <div style="font-size:0.45rem;color:#6b7280;margin-top:2px;">Model&nbsp;A</div>
+            </div>
+            <div style="text-align:center;">
+              <div style="width:36px;height:110px;background:#3b82f6;border-radius:3px 3px 0 0;"></div>
+              <div style="font-size:0.45rem;color:#6b7280;margin-top:2px;">Model&nbsp;B</div>
+            </div>
+            <div style="text-align:center;">
+              <div style="width:36px;height:65px;background:#f59e0b;border-radius:3px 3px 0 0;"></div>
+              <div style="font-size:0.45rem;color:#6b7280;margin-top:2px;">Model&nbsp;C</div>
+            </div>
+          </div>
+          <div style="font-size:0.5rem;color:#9ca3af;text-align:center;">Accuracy (%)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Laptop / Presenter view -->
+    <div style="flex: 1.4; min-width: 280px; max-width: 440px;">
+      <div style="text-align: center; font-size: 0.7rem; font-weight: 600; color: #6b7280; margin-bottom: 0.4rem;">YOUR LAPTOP (only you see this)</div>
+      <div style="border: 2px solid #374151; border-radius: 8px; overflow: hidden; background: #1f2937;">
+        <!-- Top bar -->
+        <div style="display: flex; align-items: center; padding: 4px 8px; background: #111827; gap: 4px;">
+          <div style="width:6px;height:6px;border-radius:50%;background:#ef4444;"></div>
+          <div style="width:6px;height:6px;border-radius:50%;background:#f59e0b;"></div>
+          <div style="width:6px;height:6px;border-radius:50%;background:#22c55e;"></div>
+          <span style="font-size:0.5rem;color:#9ca3af;margin-left:6px;">Presenter View</span>
+        </div>
+        <div style="display: flex; gap: 0;">
+          <!-- Left: current slide thumbnail + next slide -->
+          <div style="flex: 0 0 45%; padding: 8px; display: flex; flex-direction: column; gap: 6px;">
+            <div style="background: white; border-radius: 4px; padding: 6px; min-height: 80px; display: flex; flex-direction: column;">
+              <div style="font-size: 0.55rem; font-weight: 700; color: #111827; margin-bottom: 4px;">Results: Model Comparison</div>
+              <div style="display:flex;align-items:flex-end;justify-content:center;gap:4px;flex:1;padding:4px 0;">
+                <div style="width:14px;height:30px;background:#ef4444;border-radius:2px 2px 0 0;"></div>
+                <div style="width:14px;height:42px;background:#3b82f6;border-radius:2px 2px 0 0;"></div>
+                <div style="width:14px;height:24px;background:#f59e0b;border-radius:2px 2px 0 0;"></div>
+              </div>
+            </div>
+            <div style="font-size:0.45rem;color:#9ca3af;">Next slide:</div>
+            <div style="background: #374151; border-radius: 3px; padding: 4px; min-height: 40px;">
+              <div style="font-size:0.45rem;color:#d1d5db;font-weight:600;">Conclusions</div>
+              <div style="font-size:0.4rem;color:#9ca3af;margin-top:2px;">• Summary of findings...</div>
+            </div>
+          </div>
+          <!-- Right: notes + timer -->
+          <div style="flex: 1; padding: 8px; border-left: 1px solid #374151; display: flex; flex-direction: column; gap: 6px;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span style="font-size: 0.5rem; color: #60a5fa; font-weight: 600;">Speaker Notes</span>
+              <span style="font-size: 0.65rem; color: #22c55e; font-family: monospace; font-weight: 700;">12:34</span>
+            </div>
+            <div style="background: #374151; border-radius: 4px; padding: 6px; flex: 1; font-size: 0.48rem; color: #e5e7eb; line-height: 1.5;">
+              Explain that the bar chart shows accuracy across 3 models on our benchmark.<br><br>
+              <strong style="color:#fbbf24;">Key point:</strong> Model B outperforms despite being 3x cheaper to run.<br><br>
+              Mention that we ran 5 independent trials &mdash; error bars are in the appendix slide.
+            </div>
+            <div style="display: flex; justify-content: center; gap: 12px; padding-top: 2px;">
+              <span style="font-size: 0.5rem; color: #9ca3af;">Slide 7 of 22</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Laptop base -->
+      <div style="width: 70%; height: 6px; margin: 0 auto; background: linear-gradient(to bottom, #9ca3af, #d1d5db); border-radius: 0 0 4px 4px;"></div>
+    </div>
+  </div>
+
+  <div class="callout principle">
+    <strong>Tip:</strong> Keep your notes as bullet points, not full sentences. They're a safety net to jog your memory, not a script. If you're reading your notes word-for-word, you haven't practiced enough.
   </div>
 </section>
 
