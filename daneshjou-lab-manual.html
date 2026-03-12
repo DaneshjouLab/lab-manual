@@ -312,6 +312,7 @@ section.chapter:last-child { border-bottom: none; }
   <p class="subtitle">Stanford University &middot; Department of Biomedical Data Science &amp; Dermatology</p>
   <p>The Daneshjou Lab at Stanford is a group of interdisciplinary researchers in the Department of Biomedical Data Science and Dermatology, developing and applying AI/ML methods to solve problems in medicine and health equity. The faculty PI is Professor Roxana Daneshjou, MD, PhD.</p>
   <p>This manual covers lab culture, policies, and practical guides for running research projects &mdash; including large-scale LLM experiments.</p>
+  <p><strong>Lab GitHub:</strong> <a href="https://github.com/DaneshjouLab">github.com/DaneshjouLab</a></p>
 </section>
 
 <!-- ==================== CHAPTER 1 ==================== -->
@@ -398,8 +399,8 @@ section.chapter:last-child { border-bottom: none; }
       <tr><td>7</td><td>Commit Signature Verification</td><td>Set up GPG or SSH signing for commits</td></tr>
       <tr><td>8</td><td>30+ Commits</td><td>Demonstrate active coding engagement</td></tr>
       <tr><td>9</td><td>Slack Access</td><td>Join the Daneshjou Lab Slack workspace</td></tr>
-      <tr><td>10</td><td>Calendar Invite</td><td>Get added to lab meeting calendar &mdash; contact <a href="mailto:daneshjoulab@stanford.edu">daneshjoulab@stanford.edu</a></td></tr>
-      <tr><td>11</td><td>Google Drive Access</td><td>Get added to the shared lab drive &mdash; contact <a href="mailto:daneshjoulab@stanford.edu">daneshjoulab@stanford.edu</a></td></tr>
+      <tr><td>10</td><td>Calendar Invite</td><td>Get added to lab meeting calendar &mdash; contact <a data-email="lab" data-show-email></a></td></tr>
+      <tr><td>11</td><td>Google Drive Access</td><td>Get added to the shared lab drive &mdash; contact <a data-email="lab" data-show-email></a></td></tr>
     </tbody>
   </table>
 
@@ -519,7 +520,7 @@ section.chapter:last-child { border-bottom: none; }
 
   <h2 id="s4-3">4.3 IRBs</h2>
   <p>Most research involving human data requires <strong>Institutional Review Board (IRB)</strong> approval. At Stanford, IRB protocols are managed through <a href="https://irb.stanford.edu/">Stanford's IRB office</a>.</p>
-  <p>To get added to an IRB protocol in the Daneshjou Lab, contact <strong>Sana Kidwai</strong> at <a href="mailto:kidwai@stanford.edu">kidwai@stanford.edu</a>.</p>
+  <p>To get added to an IRB protocol in the Daneshjou Lab, contact <strong><span data-person="irb_contact" data-field="name">Sana Kidwai</span></strong> at <a data-email="irb_contact" data-show-email></a>.</p>
   <p><strong>Required trainings</strong> before being added to any IRB:</p>
   <ol>
     <li><strong>CITI Group 7 Training</strong> &mdash; Complete through the <a href="https://www.citiprogram.org/">CITI Program website</a>.</li>
@@ -577,7 +578,7 @@ section.chapter:last-child { border-bottom: none; }
     <li>Running computationally expensive simulations</li>
     <li>Handling large biomedical datasets (non-PHI)</li>
   </ul>
-  <p><strong>Access:</strong> Sherlock access is granted through the lab. Reach out to <a href="mailto:daneshjoulab@stanford.edu">daneshjoulab@stanford.edu</a> to get set up.</p>
+  <p><strong>Access:</strong> Sherlock access is granted through the lab. Reach out to <a data-email="lab" data-show-email></a> to get set up.</p>
   <p>Key topics to review when getting started:</p>
   <ul>
     <li>Logging in via SSH</li>
@@ -596,7 +597,7 @@ section.chapter:last-child { border-bottom: none; }
     <li><strong>Mounted on Sherlock</strong> for convenient access from compute jobs</li>
     <li>Provides large shared lab/group directories</li>
   </ul>
-  <p><strong>Access:</strong> Reach out to <a href="mailto:daneshjoulab@stanford.edu">daneshjoulab@stanford.edu</a> for OAK allocations.</p>
+  <p><strong>Access:</strong> Reach out to <a data-email="lab" data-show-email></a> for OAK allocations.</p>
   <p>Key topics to review:</p>
   <ul>
     <li>Mounting and accessing OAK from Sherlock</li>
@@ -611,9 +612,9 @@ section.chapter:last-child { border-bottom: none; }
   <h2 id="s5-4">5.4 Who to Ask for Help</h2>
   <p>When you need computing resources or run into issues, here's who to contact:</p>
   <ul>
-    <li><strong>API access and keys:</strong> Email <a href="mailto:daneshjoulab@stanford.edu">daneshjoulab@stanford.edu</a> with subject line <strong>"SECURE: [DaneshjouLab] API Key Request"</strong>. Include a brief description of your task and the model you intend to use. Keys are sent securely via Stanford Secure Mail.</li>
-    <li><strong>GCP access:</strong> After being granted permission to access a specific project on GCP and added to the respective IRB, reach out to <a href="mailto:daneshjoulab@stanford.edu">daneshjoulab@stanford.edu</a>.</li>
-    <li><strong>Sherlock cluster help:</strong> Contact <strong>Aaron Fanous</strong> for guidance on setting up jobs, GPU allocation, and troubleshooting Sherlock issues.</li>
+    <li><strong>API access and keys:</strong> Email <a data-email="lab" data-show-email></a> with subject line <strong>"SECURE: [DaneshjouLab] API Key Request"</strong>. Include a brief description of your task and the model you intend to use. Keys are sent securely via Stanford Secure Mail.</li>
+    <li><strong>GCP access:</strong> After being granted permission to access a specific project on GCP and added to the respective IRB, reach out to <a data-email="lab" data-show-email></a>.</li>
+    <li><strong>Sherlock cluster help:</strong> Contact <strong><span data-person="sherlock_contact" data-field="name">Aaron Fanous</span></strong> for guidance on setting up jobs, GPU allocation, and troubleshooting Sherlock issues.</li>
     <li><strong>General computing questions:</strong> Post in the lab's Slack computing channel. Chances are someone has encountered your issue before.</li>
   </ul>
 
@@ -1768,22 +1769,22 @@ Emphasize that Model B outperforms despite lower cost.}</code></pre>
   <h1>13. FAQs</h1>
 
   <h3>How do I get added to the Daneshjou Lab GitHub organization?</h3>
-  <p>Reach out to <a href="mailto:bikia@stanford.edu">bikia@stanford.edu</a>. See the <a href="#s2-2">Onboarding Checklist</a> for the full setup process including GitHub requirements.</p>
+  <p>Reach out to <a data-email="github_contact" data-show-email></a>. See the <a href="#s2-2">Onboarding Checklist</a> for the full setup process including GitHub requirements.</p>
 
   <h3>How am I added to lab meeting calendar invites?</h3>
-  <p>Contact <a href="mailto:daneshjoulab@stanford.edu">daneshjoulab@stanford.edu</a>. This is part of the <a href="#s2-2">Onboarding Checklist</a> (step 10) and is typically done once all prior onboarding tasks are complete.</p>
+  <p>Contact <a data-email="lab" data-show-email></a>. This is part of the <a href="#s2-2">Onboarding Checklist</a> (step 10) and is typically done once all prior onboarding tasks are complete.</p>
 
   <h3>How am I added to the Daneshjou Lab Google shared drive?</h3>
-  <p>Contact <a href="mailto:daneshjoulab@stanford.edu">daneshjoulab@stanford.edu</a>. This is part of the <a href="#s2-2">Onboarding Checklist</a> (step 11).</p>
+  <p>Contact <a data-email="lab" data-show-email></a>. This is part of the <a href="#s2-2">Onboarding Checklist</a> (step 11).</p>
 
   <h3>How do I request API keys (e.g., OpenAI, Claude, etc.)?</h3>
-  <p>Email <a href="mailto:daneshjoulab@stanford.edu">daneshjoulab@stanford.edu</a> with subject line <strong>"SECURE: [DaneshjouLab] API Key Request"</strong>. Include a brief description of your task and the model you intend to use. Keys are sent securely via Stanford Secure Mail.</p>
+  <p>Email <a data-email="lab" data-show-email></a> with subject line <strong>"SECURE: [DaneshjouLab] API Key Request"</strong>. Include a brief description of your task and the model you intend to use. Keys are sent securely via Stanford Secure Mail.</p>
 
   <h3>How do I get access to Google Cloud Platform (GCP) for a specific project?</h3>
-  <p>After being granted permission to access the project on GCP and added to the respective IRB, reach out to <a href="mailto:daneshjoulab@stanford.edu">daneshjoulab@stanford.edu</a>.</p>
+  <p>After being granted permission to access the project on GCP and added to the respective IRB, reach out to <a data-email="lab" data-show-email></a>.</p>
 
   <h3>How do I get IRB approval to access PHI data?</h3>
-  <p>See <a href="#ch4">Chapter 4 (Data)</a> for full details on IRB and data access. In short: contact <strong>Sana Kidwai</strong> at <a href="mailto:kidwai@stanford.edu">kidwai@stanford.edu</a>. You will need to complete:</p>
+  <p>See <a href="#ch4">Chapter 4 (Data)</a> for full details on IRB and data access. In short: contact <strong><span data-person="irb_contact" data-field="name">Sana Kidwai</span></strong> at <a data-email="irb_contact" data-show-email></a>. You will need to complete:</p>
   <ol>
     <li><strong>CITI Group 7 Training</strong> (<a href="https://www.citiprogram.org/">citiprogram.org</a>)</li>
     <li><strong>HIPAA Protecting Patient Privacy 2025</strong> (PRIV-2025-WEB) &mdash; via <a href="https://axess.stanford.edu/">Axess</a></li>
@@ -1807,8 +1808,9 @@ Emphasize that Model B outperforms despite lower cost.}</code></pre>
   <h2 id="s15-1">Contributors</h2>
   <ul>
     <li><strong>Vicky Bikia</strong> &mdash; Lab standards and onboarding guide</li>
+    <li><strong>Shlok Natarajan</strong> &mdash; Lab standards and onboarding guide</li>
+    <li><strong>Aaron H. Fanous, MD</strong> &mdash; Lab standards and onboarding guide, additional contributions</li>
     <li><strong>Ank A. Agarwal</strong> &mdash; Website development, LLM Experiment Pipeline (Ch. 10), Thinking About Projects (Ch. 11), Presentations &amp; Graphics (Ch. 12), and additional content throughout</li>
-    <li><strong>Aaron H. Fanous, MD</strong> &mdash; Additional contributions</li>
     <li><strong>Roxana Daneshjou, MD, PhD</strong> &mdash; Principal Investigator</li>
   </ul>
 
@@ -1831,6 +1833,66 @@ Emphasize that Model B outperforms despite lower cost.}</code></pre>
 </div>
 
 <script>
+/* ========================================================
+   LAB DIRECTORY — edit names / emails here once;
+   every <span data-person="key"> and <a data-email="key">
+   on the page will update automatically.
+   ======================================================== */
+const LAB_DIRECTORY = {
+  pi: {
+    name:  "Roxana Daneshjou, MD, PhD",
+    short: "Dr. Daneshjou",
+    first: "Roxana",
+    email: "roxana.daneshjou@stanford.edu"
+  },
+  lab: {
+    name:  "Daneshjou Lab",
+    email: "daneshjoulab@stanford.edu"
+  },
+  irb_contact: {
+    name:  "Sana Kidwai",
+    email: "kidwai@stanford.edu"
+  },
+  github_contact: {
+    name:  "Vicky Bikia",
+    email: "bikia@stanford.edu"
+  },
+  sherlock_contact: {
+    name:  "Aaron Fanous",
+    email: ""
+  }
+};
+
+/* Populate data-person spans and data-email links from the directory */
+(function populateDirectory() {
+  document.querySelectorAll('[data-person]').forEach(el => {
+    const key = el.getAttribute('data-person');
+    const field = el.getAttribute('data-field') || 'short';
+    const parts = key.split('.');
+    let val = LAB_DIRECTORY;
+    for (const p of parts) { val = val && val[p]; }
+    if (val && typeof val === 'object') val = val[field];
+    if (val) el.textContent = val;
+  });
+  document.querySelectorAll('a[data-email]').forEach(el => {
+    const key = el.getAttribute('data-email');
+    const parts = key.split('.');
+    let entry = LAB_DIRECTORY;
+    for (const p of parts) { entry = entry && entry[p]; }
+    if (entry && typeof entry === 'object') {
+      el.href = 'mailto:' + entry.email;
+      if (!el.textContent.trim() || el.hasAttribute('data-show-email')) {
+        el.textContent = entry.email;
+      }
+    } else if (typeof entry === 'string') {
+      el.href = 'mailto:' + entry;
+      if (!el.textContent.trim() || el.hasAttribute('data-show-email')) {
+        el.textContent = entry;
+      }
+    }
+  });
+})();
+
 (function() {
   // Elements
   const sidebar = document.getElementById('sidebar');
