@@ -854,6 +854,26 @@ section.chapter:last-child { border-bottom: none; }
   </ul>
   <p>Configure these tools in your project and run them before every commit (ideally via pre-commit hooks).</p>
 
+  <h3>Configuration over Hard-Coding</h3>
+  <p>Never hard-code values that might change &mdash; file paths, model names, hyperparameters, API endpoints, thresholds, dataset paths, output directories. Instead, put them in a <strong>YAML config file</strong> and have your code read from it.</p>
+  <div class="callout callout-example">
+    <div class="callout-title">Example</div>
+    <p><strong>Bad:</strong></p>
+    <pre><code>model = "gpt-4o"
+temperature = 0.7
+data_path = "/Users/john/Desktop/data.csv"</code></pre>
+    <p><strong>Good:</strong> Create a <code>config.yaml</code>:</p>
+    <pre><code>model: gpt-4o
+temperature: 0.7
+data_path: data/input.csv</code></pre>
+    <p>Then in your code:</p>
+    <pre><code>import yaml
+with open("config.yaml") as f:
+    cfg = yaml.safe_load(f)
+model = cfg["model"]</code></pre>
+  </div>
+  <p>This way, anyone can change settings without touching code, and you can maintain separate configs for different environments (e.g., <code>laptop.yaml</code> vs. <code>sherlock.yaml</code>). For a detailed walkthrough, see <a href="#s11-4">Section 10.4 (Config vs. Code)</a>.</p>
+
   <h2 id="s9-3">8.3 Naming Conventions</h2>
   <p>Good names make code self-documenting. Use <code>snake_case</code> for variables, functions, and file names. Be <strong>descriptive</strong>: <code>patient_age</code> not <code>x</code>, <code>calculate_accuracy</code> not <code>func1</code>. Avoid abbreviations unless universally understood.</p>
 
