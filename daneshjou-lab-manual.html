@@ -11,7 +11,67 @@ html { scroll-behavior: smooth; font-size: 16px; }
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   color: #1a1a2e; background: #fff; line-height: 1.7;
+  transition: background 0.2s, color 0.2s;
 }
+
+/* ===== DARK MODE ===== */
+html.dark body { background: #0f1117; color: #e2e8f0; }
+html.dark .sidebar { background: #1a1d27; border-right-color: #2d3148; }
+html.dark .sidebar-header { border-bottom-color: #2d3148; }
+html.dark .sidebar-title { color: #f87171; }
+html.dark .sidebar-search { background: #252836; border-color: #3d4163; color: #e2e8f0; }
+html.dark .sidebar-search::placeholder { color: #6b7280; }
+html.dark .sidebar-nav a { color: #9ca3af; }
+html.dark .sidebar-nav a:hover { background: #252836; color: #e2e8f0; }
+html.dark .sidebar-nav a.active { color: #f87171; background: rgba(248,113,113,0.08); border-left-color: #f87171; }
+html.dark .sidebar-nav a.sub-link { color: #6b7280; }
+html.dark .sidebar-nav a.sub-link:hover { color: #9ca3af; }
+html.dark .sidebar-nav a.sub-link.active { color: #f87171; }
+html.dark .content-area h1 { color: #f1f5f9; border-bottom-color: #2d3148; }
+html.dark .content-area h2 { color: #e2e8f0; }
+html.dark .content-area h3 { color: #cbd5e1; }
+html.dark .content-area p { color: #cbd5e1; }
+html.dark .content-area ul, html.dark .content-area ol { color: #cbd5e1; }
+html.dark .content-area code { background: #252836; color: #f1f5f9; }
+html.dark .content-area pre { background: #0d1117; }
+html.dark .content-area a { color: #f87171; }
+html.dark .content-area strong { color: #f1f5f9; }
+html.dark .content-area blockquote { border-left-color: #3d4163; color: #9ca3af; }
+html.dark .content-area th { background: #1e2130; color: #e2e8f0; }
+html.dark .content-area td { color: #cbd5e1; }
+html.dark .content-area th, html.dark .content-area td { border-color: #2d3148; }
+html.dark .content-area tr:nth-child(even) { background: #181c2a; }
+html.dark section.chapter { border-bottom-color: #2d3148; }
+html.dark .subtitle { color: #9ca3af; }
+html.dark .right-toc a { color: #6b7280; border-left-color: #2d3148; }
+html.dark .right-toc a:hover { color: #9ca3af; }
+html.dark .right-toc a.active { color: #f87171; border-left-color: #f87171; }
+html.dark .right-toc-title { color: #6b7280; }
+html.dark .callout-principle { background: #0f2a1a; border-color: #16a34a; }
+html.dark .callout-principle .callout-title { color: #4ade80; }
+html.dark .callout-example { background: #0f1e35; border-color: #3b82f6; }
+html.dark .callout-example .callout-title { color: #60a5fa; }
+html.dark .callout-warning { background: #2a0f0f; border-color: #dc2626; }
+html.dark .callout-warning .callout-title { color: #f87171; }
+html.dark .callout.principle { background: #0f2a1a; border-color: #16a34a; }
+html.dark .missing-info-banner { background: #2a1f0a; border-color: #d97706; color: #fcd34d; }
+html.dark .missing-info-banner a { color: #fcd34d; }
+html.dark .config-block { background: #1a1d27; border-color: #2d3148; }
+html.dark .slide-mock { background: #1a1d27; border-color: #2d3148; }
+html.dark .slide-mock-body { color: #cbd5e1; }
+html.dark .slide-mock-body .slide-title { color: #f1f5f9; }
+html.dark .slide-mock-body .mini-chart { background: #252836; border-color: #3d4163; }
+html.dark .hamburger { background: #1a1d27; border-color: #2d3148; }
+html.dark .hamburger span { background: #e2e8f0; }
+
+/* ===== DARK MODE TOGGLE BUTTON ===== */
+.dark-toggle {
+  position: fixed; top: 0.75rem; right: 0.75rem; z-index: 200;
+  width: 40px; height: 40px; border-radius: 8px; border: 1px solid #d1d5db;
+  background: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); transition: background 0.2s, border-color 0.2s;
+}
+html.dark .dark-toggle { background: #1a1d27; border-color: #2d3148; }
 
 /* ===== LAYOUT ===== */
 .page-wrapper { display: flex; min-height: 100vh; }
@@ -193,6 +253,7 @@ section.chapter:last-child { border-bottom: none; }
 <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
   <span></span><span></span><span></span>
 </button>
+<button class="dark-toggle" id="dark-toggle" aria-label="Toggle dark mode">🌙</button>
 <div class="overlay" id="overlay"></div>
 
 <div class="page-wrapper">
@@ -1860,6 +1921,19 @@ Emphasize that Model B outperforms despite lower cost.}</code></pre>
 </div>
 
 <script>
+// ===== DARK MODE =====
+(function() {
+  const toggle = document.getElementById('dark-toggle');
+  const html = document.documentElement;
+  const saved = localStorage.getItem('darkMode');
+  if (saved === 'true') { html.classList.add('dark'); toggle.textContent = '☀️'; }
+  toggle.addEventListener('click', function() {
+    const isDark = html.classList.toggle('dark');
+    toggle.textContent = isDark ? '☀️' : '🌙';
+    localStorage.setItem('darkMode', isDark);
+  });
+})();
+
 /* ========================================================
    LAB DIRECTORY — edit names / emails here once;
    every <span data-person="key"> and <a data-email="key">
