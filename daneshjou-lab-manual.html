@@ -112,8 +112,11 @@ html.dark .dark-toggle { background: #1a1d27; border-color: #2d3148; }
 .main-content {
   margin-left: 300px; flex: 1; display: flex; justify-content: center; min-width: 0;
 }
+.content-wrapper {
+  display: flex; align-items: flex-start; width: 100%; max-width: 1100px; min-width: 0;
+}
 .content-area {
-  max-width: 850px; width: 100%; padding: 2.5rem 2.5rem 5rem;
+  flex: 1; min-width: 0; max-width: 850px; padding: 2.5rem 2.5rem 5rem;
 }
 
 /* ===== RIGHT TOC ===== */
@@ -359,12 +362,14 @@ section.chapter:last-child { border-bottom: none; }
     <a href="#s13-7" class="sub-link" data-section="s13-7">12.7 Presenter Notes</a>
     <a href="#s13-8" class="sub-link" data-section="s13-8">12.8 Data Visualization</a>
     <a href="#ch14" class="chapter-link" data-section="ch14">13. FAQs</a>
-    <a href="#ch15" class="chapter-link" data-section="ch15">Contributors</a>
+    <a href="#ch16" class="chapter-link" data-section="ch16">14. Points-of-Contact</a>
+    <a href="#ch15" class="chapter-link" data-section="ch15">15. Contributors</a>
   </div>
 </nav>
 
 <!-- ===== MAIN ===== -->
 <main class="main-content">
+<div class="content-wrapper">
 <article class="content-area" id="content">
 
 <!-- ==================== HOME ==================== -->
@@ -1855,44 +1860,99 @@ Emphasize that Model B outperforms despite lower cost.}</code></pre>
 <!-- ==================== CHAPTER 14 ==================== -->
 <section class="chapter" id="ch14">
   <h1>13. FAQs</h1>
+  <p>For access requests and points-of-contact, see <a href="#ch16">Chapter 14 (Points-of-Contact &amp; Resource Access)</a>.</p>
 
-  <h3>How do I get added to the Daneshjou Lab GitHub organization?</h3>
-  <p>Reach out to <a data-email="github_contact" data-show-email></a>. See the <a href="#s2-2">Onboarding Checklist</a> for the full setup process including GitHub requirements.</p>
+  <h3>Who is the corresponding author on lab publications?</h3>
+  <p>Dr. Daneshjou is the corresponding author on all lab publications. See <a href="#s6-2">Section 6.2 (Authorship)</a> for details.</p>
 
-  <h3>How am I added to lab meeting calendar invites?</h3>
-  <p>Contact <a data-email="lab" data-show-email></a>. This is part of the <a href="#s2-2">Onboarding Checklist</a> (step 10) and is typically done once all prior onboarding tasks are complete.</p>
+  <h3>Where should I post preprints?</h3>
+  <p>Always post to arXiv first, but get Dr. Daneshjou's approval before posting. See <a href="#s6-3">Section 6.3 (Preprints)</a>.</p>
 
-  <h3>How am I added to the Daneshjou Lab Google shared drive?</h3>
-  <p>Contact <a data-email="lab" data-show-email></a>. This is part of the <a href="#s2-2">Onboarding Checklist</a> (step 11).</p>
-
-  <h3>How do I request API keys (e.g., OpenAI, Claude, etc.)?</h3>
-  <p>Email <a data-email="lab" data-show-email></a> with subject line <strong>"SECURE: [DaneshjouLab] API Key Request"</strong>. Include a brief description of your task and the model you intend to use. Keys are sent securely via Stanford Secure Mail.</p>
-
-  <h3>How do I get access to Google Cloud Platform (GCP) for a specific project?</h3>
-  <p>After being granted permission to access the project on GCP and added to the respective IRB, reach out to <a data-email="lab" data-show-email></a>.</p>
+  <h3>How do I access Sherlock or OAK?</h3>
+  <p>See <a href="#s5-1">Section 5.1 (Sherlock)</a> and <a href="#s5-2">Section 5.2 (OAK)</a> for access instructions and best practices.</p>
 
   <h3>How do I get IRB approval to access PHI data?</h3>
-  <p>See <a href="#ch4">Chapter 4 (Data)</a> for full details on IRB and data access. In short: contact <strong><span data-person="irb_contact" data-field="name">Sana Kidwai</span></strong> at <a data-email="irb_contact" data-show-email></a>. You will need to complete:</p>
+  <p>See <a href="#ch4">Chapter 4 (Data)</a> for full details. Contact <strong><span data-person="irb_contact" data-field="name">Sana Kidwai</span></strong> at <a data-email="irb_contact" data-show-email></a>. You will need to complete:</p>
   <ol>
     <li><strong>CITI Group 7 Training</strong> (<a href="https://www.citiprogram.org/">citiprogram.org</a>)</li>
     <li><strong>HIPAA Protecting Patient Privacy 2025</strong> (PRIV-2025-WEB) &mdash; via <a href="https://axess.stanford.edu/">Axess</a></li>
     <li><strong>HIPAA Privacy for Researchers 2025</strong> (CLIN-2025-WEB) &mdash; via <a href="https://axess.stanford.edu/">Axess</a></li>
   </ol>
   <p>If the HIPAA course links don't open directly, find them in Axess under <strong>STARS</strong>.</p>
+</section>
 
-  <h3>Who is the corresponding author on lab publications?</h3>
-  <p>Dr. Daneshjou is the corresponding author on all lab publications. See <a href="#s6-2">Section 6.2 (Authorship)</a> for details on authorship policies and the submission process.</p>
+<!-- ==================== CHAPTER 16 (POC) ==================== -->
+<section class="chapter" id="ch16">
+  <h1>14. Points-of-Contact &amp; Resource Access</h1>
+  <p>Use this section to find the right person for access requests and lab resources. When in doubt, start with <a data-email="lab" data-show-email></a>.</p>
 
-  <h3>Where should I post preprints?</h3>
-  <p>Always post to arXiv first, but get Dr. Daneshjou's approval before posting. See <a href="#s6-3">Section 6.3 (Preprints)</a>.</p>
-
-  <h3>How do I access Sherlock or OAK?</h3>
-  <p>See <a href="#s5-1">Section 5.1 (Sherlock)</a> and <a href="#s5-2">Section 5.2 (OAK)</a> for access instructions, documentation links, and best practices.</p>
+  <table>
+    <thead>
+      <tr><th>Resource / Access</th><th>Who to Contact</th><th>Notes</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>GitHub organization</strong></td>
+        <td><a data-email="github_contact" data-show-email></a></td>
+        <td>See <a href="#s2-2">Onboarding Checklist</a></td>
+      </tr>
+      <tr>
+        <td><strong>Lab meeting calendar invites</strong></td>
+        <td><a data-email="lab" data-show-email></a></td>
+        <td>Part of onboarding (step 10)</td>
+      </tr>
+      <tr>
+        <td><strong>Google shared drive</strong></td>
+        <td><a data-email="lab" data-show-email></a></td>
+        <td>Part of onboarding (step 11)</td>
+      </tr>
+      <tr>
+        <td><strong>API keys</strong> (OpenAI, Claude, Gemini, etc.)</td>
+        <td>Vicky Bikia or Aaron Fanous</td>
+        <td>Email with subject "SECURE: [DaneshjouLab] API Key Request" &mdash; include task description and model</td>
+      </tr>
+      <tr>
+        <td><strong>Claude Code access &amp; policies</strong></td>
+        <td>Wei</td>
+        <td>We are still working out billing, usage limits, and who can get access &mdash; reach out to Wei with questions</td>
+      </tr>
+      <tr>
+        <td><strong>AWS credits</strong></td>
+        <td><em>TBD</em></td>
+        <td>&mdash;</td>
+      </tr>
+      <tr>
+        <td><strong>Google Cloud Platform (GCP)</strong></td>
+        <td><a data-email="lab" data-show-email></a></td>
+        <td>Must first be added to the relevant IRB</td>
+      </tr>
+      <tr>
+        <td><strong>Sherlock / OAK (HPC &amp; storage)</strong></td>
+        <td>Stanford Research Computing</td>
+        <td>See <a href="#s5-1">Section 5.1</a> and <a href="#s5-2">5.2</a>; request access via <a href="https://www.sherlock.stanford.edu/">sherlock.stanford.edu</a></td>
+      </tr>
+      <tr>
+        <td><strong>IRB / PHI data access</strong></td>
+        <td><strong><span data-person="irb_contact" data-field="name">Sana Kidwai</span></strong> &mdash; <a data-email="irb_contact" data-show-email></a></td>
+        <td>See <a href="#ch4">Chapter 4 (Data)</a> and <a href="#ch14">FAQs</a> for CITI/HIPAA training requirements</td>
+      </tr>
+      <tr>
+        <td><strong>Lab purchases / reimbursements</strong></td>
+        <td><em>TBD</em></td>
+        <td>&mdash;</td>
+      </tr>
+      <tr>
+        <td><strong>Slack workspace</strong></td>
+        <td><a data-email="lab" data-show-email></a></td>
+        <td>Part of onboarding</td>
+      </tr>
+    </tbody>
+  </table>
 </section>
 
 <!-- ==================== CONTRIBUTORS ==================== -->
 <section class="chapter" id="ch15">
-  <h1>Contributors &amp; Acknowledgments</h1>
+  <h1>15. Contributors &amp; Acknowledgments</h1>
   <h2 id="s15-1">Contributors</h2>
   <ul>
     <li><strong>Vicky Bikia</strong> &mdash; Lab standards and onboarding guide</li>
@@ -1917,6 +1977,7 @@ Emphasize that Model B outperforms despite lower cost.}</code></pre>
   <div class="right-toc-title">On this page</div>
   <div id="right-toc-links"></div>
 </aside>
+</div>
 </main>
 </div>
 
